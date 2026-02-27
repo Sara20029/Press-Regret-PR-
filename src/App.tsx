@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
-import GameTest from "./pages/GameTest";
+import Game from "./pages/Game";
 import About from "./pages/About";
 import HowToPlay from "./pages/HowToPlay";
 
@@ -18,7 +18,7 @@ export default function App() {
         <BrowserRouter>
             <Nav />
             <Routes>
-                <Route path="/" element={<GameTest />} />
+                <Route path="/" element={<Game />} />
                 <Route path="/how-to-play" element={<HowToPlay />} />
                 <Route path="/about" element={<About />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
