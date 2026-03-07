@@ -1,27 +1,35 @@
-import { useEffect, useState } from "react";
-import { api } from "../api/http";
+import { useState, useEffect } from "react";
 
-type Section = { heading: string; body: string };
-type Content = { slug: string; title: string; sections: Section[] };
+type HowToPlayContent = {
+    title: string;
+    description: string;
+    instructions: string[];
+};
 
 export default function HowToPlay() {
-    const [data, setData] = useState<Content | null>(null);
+    const [content, setContent] = useState<HowToPlayContent | null>(null);
 
     useEffect(() => {
-        api.get<Content>("/api/content/how-to-play").then((r) => setData(r.data));
-    }, []);
+        fetch("http://localhost:8080/api/content/how-to-play")
+            .then(response => response.json())
+            .then(data => {
+                setContent(data)
+            });
+        }, []);
 
-    if (!data) return <main style={{ padding: 24 }}>Lade…</main>;
-
+    if(!content){
+        return <div>Loading...</div>
+    }
     return (
-        <main style={{ padding: 24 }}>
-            <h1>{data.title}</h1>
-            {data.sections.map((s, i) => (
-                <section key={i} style={{ marginTop: 16 }}>
-                    <h3>{s.heading}</h3>
-                    <p>{s.body}</p>
-                </section>
-            ))}
-        </main>
+        <div>
+            <h1>{content.title}</h1>
+            <p>{content.description}</p>
+
+            <ul>
+                {content.instructions.map((instruction, index) => (
+                    <li key={index}>{instruction}</li>
+                ) )}
+            </ul>
+        </div>
     );
 }
