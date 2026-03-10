@@ -1,4 +1,3 @@
-// @ts-ignore
 import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
 import Game from "./pages/Game";
 import About from "./pages/About";
