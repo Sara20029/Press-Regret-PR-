@@ -1,5 +1,3 @@
-import Easy from "./Levels/Easy.tsx";
-
 export default function Game() {
-    return <Easy/>
+    return <h1>Game funktioniert</h1>;
 }
