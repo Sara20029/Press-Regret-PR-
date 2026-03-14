@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { api } from "../api/http";
 
 type LevelResponse = {
-    id: number;
-    difficultyId: number;
-    levelNumber: number;
-    description: string;
+    levelId: number;
+    difficulty: number;
+    number: number;
+    instruction: string;
 };
 
 export default function Game() {
@@ -34,8 +34,8 @@ export default function Game() {
     return (
         <Easy
             title="Press & Regret: Easy"
-            levelNumber={firstLevel.levelNumber}
-            buttonText={firstLevel.description}
+            levelNumber={firstLevel.number}
+            buttonText={firstLevel.instruction}
             timer={45}
         />
     );

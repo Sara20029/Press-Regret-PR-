@@ -3,8 +3,8 @@ import "./Easy.css";
 type EasyProps = {
     title: string;
     levelNumber: number;
-    timer: number;
     buttonText: string;
+    timer: number;
 };
 
 export default function Easy({ title, levelNumber, timer, buttonText }: EasyProps) {
