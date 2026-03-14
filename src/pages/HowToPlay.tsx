@@ -1,27 +1,40 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/http";
 
-type Section = { heading: string; body: string };
-type Content = { slug: string; title: string; sections: Section[] };
+type Content = {
+    title: string;
+    description: string;
+    instructions: string[];
+};
 
 export default function HowToPlay() {
     const [data, setData] = useState<Content | null>(null);
 
     useEffect(() => {
-        api.get<Content>("/api/content/how-to-play").then((r) => setData(r.data));
+        api.get<Content>("/api/content/how-to-play")
+            .then((r) => {
+                console.log("Response:", r.data);
+                setData(r.data);
+            })
+            .catch((err) => console.error("API Fehler:", err));
     }, []);
 
-    if (!data) return <main style={{ padding: 24 }}>Lade…</main>;
+    if (!data) {
+        return <main style={{ padding: 24, color: "white" }}>Lade…</main>;
+    }
 
     return (
-        <main style={{ padding: 24 }}>
+        <main style={{ padding: 24, color: "white" }}>
             <h1>{data.title}</h1>
-            {data.sections.map((s, i) => (
-                <section key={i} style={{ marginTop: 16 }}>
-                    <h3>{s.heading}</h3>
-                    <p>{s.body}</p>
-                </section>
-            ))}
+            <p>{data.description}</p>
+
+            <ul style={{ marginTop: 16 }}>
+                {data.instructions.map((instruction, index) => (
+                    <li key={index} style={{ marginTop: 8 }}>
+                        {instruction}
+                    </li>
+                ))}
+            </ul>
         </main>
     );
 }
