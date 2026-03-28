@@ -1,9 +1,9 @@
-import Easy from "./Levels/Easy";
-import Medium from "./Levels/Medium";
-import Hard from "./Levels/Hard";
+import Easy from "../Levels/Easy.tsx";
+import Medium from "../Levels/Medium.tsx";
+import Hard from "../Levels/Hard.tsx";
 import { useEffect, useState } from "react";
-import {useParams, Navigate} from "react-router-dom";
-import { api } from "../api/http";
+import {useParams, Navigate, Link} from "react-router-dom";
+import { api } from "../../api/http.ts";
 
 
 type LevelResponse = {
@@ -16,6 +16,19 @@ type LevelResponse = {
 export default function Game() {
     const { difficulty } = useParams();
     const [levels, setLevels] = useState<LevelResponse[] | null>(null);
+
+    if (!difficulty) {
+        return (
+            <main style={{ padding: 24 }}>
+                <h1>Wähle eine Schwierigkeit</h1>
+                <div style={{ display: "flex", gap: 12, marginTop: 16 }}>
+                    <Link to="/game/easy">Easy</Link>
+                    <Link to="/game/medium">Medium</Link>
+                    <Link to="/game/hard">Hard</Link>
+                </div>
+            </main>
+        );
+    }
 
     const difficultyMap: Record<string, number> = {
         easy: 1,
@@ -38,7 +51,7 @@ export default function Game() {
     }, [difficultyId]);
 
     if(!difficultyId){
-        return <Navigate to="/game/easy" replace />;
+        return <Navigate to="/game" replace />;
     }
 
     if (!levels) {
@@ -79,5 +92,5 @@ export default function Game() {
         );
     }
 
-    return <Navigate to="/game/easy" replace />;
+    return <Navigate to="/game" replace />;
 }
