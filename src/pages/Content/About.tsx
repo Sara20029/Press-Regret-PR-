@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { api } from "../api/http";
+import { api } from "../../api/http.ts";
 
 
 type Content = { title: string; description: string };
