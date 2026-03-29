@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f4f6f8;
+    background: linear-gradient(135deg, #f4f7fb, #dfe9f3);
     padding: 24px;
     box-sizing: border-box;
 }
@@ -76,7 +76,7 @@
     padding: 14px;
     border: none;
     border-radius: 10px;
-    background-color: #4f46e5;
+    background-color: #ffffff;
     color: white;
     font-size: 1rem;
     font-weight: 600;
