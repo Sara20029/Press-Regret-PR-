@@ -1,0 +1,9 @@
+.contact-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #f4f7fb, #dfe9f3);
+    padding: 24px;
+    box-sizing: border-box;
+}

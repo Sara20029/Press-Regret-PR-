@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../../api/http.ts";
+import "./Contact.css";
 
 type Content = {
     title: string;
@@ -24,10 +25,10 @@ export default function Contact() {
     }
 
     return (
-        <main style={{ padding: 24, color: "white" }}>
-            <h1>{data.title}</h1>
-            <p>{data.description}</p>
-            <p>{data.email}</p>
+        <main className="contact-page" style={{ padding: 24, color: "white" }}>
+            <h1 style={{color: "black"}}>{data.title}</h1>
+            <p style={{color: "black"}}>{data.description}</p>
+            <p style={{color: "black"}}>{data.email}</p>
 
         </main>
     );
