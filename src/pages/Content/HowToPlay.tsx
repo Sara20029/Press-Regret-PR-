@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../../api/http.ts";
+import "./HowToPlay.css";
 
 type Content = {
     title: string;
@@ -24,11 +25,11 @@ export default function HowToPlay() {
     }
 
     return (
-        <main style={{ padding: 24, color: "white" }}>
-            <h1>{data.title}</h1>
-            <p>{data.description}</p>
+        <main className="howToPlay-page" style={{ padding: 24, color: "white" }}>
+            <h1 style={{color: "black"}}>{data.title}</h1>
+            <p style={{color: "black"}}>{data.description}</p>
 
-            <ul style={{ marginTop: 16 }}>
+            <ul style={{ marginTop: 16, color: "black"}}>
                 {data.instructions.map((instruction, index) => (
                     <li key={index} style={{ marginTop: 8 }}>
                         {instruction}

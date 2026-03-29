@@ -1,7 +1,7 @@
 .achievements-page {
     min-height: 100vh;
     padding: 40px 24px;
-    background: linear-gradient(to bottom, #f5f7fb, #e9eef8);
+    background: linear-gradient(135deg, #f4f7fb, #dfe9f3);
     color: #1f2937;
     font-family: Arial, Helvetica, sans-serif;
 }

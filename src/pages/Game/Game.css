@@ -1,0 +1,99 @@
+.game-page {
+    display: flex;
+    align-items: center;
+    padding: 40px;
+    background: linear-gradient(135deg, #f4f7fb, #dfe9f3);
+    min-height: 100vh;
+    min-width: 100vw;
+    box-sizing: border-box;
+}
+.game-box {
+    background-color: #111;
+    width: 900px;
+    height: 700px;
+    border-radius: 16px;
+    border: 2px solid #333;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.nav {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    border-bottom: 1px solid #444;
+}
+
+.status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 0;
+    padding: 0 16px;
+}
+
+.level {
+    font-size: 28px;
+}
+
+.timer {
+    width: 80px;
+    height: 80px;
+    background-color: #d9d9d9;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-size: 26px;
+    font-weight: bold;
+}
+.center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circle-button {
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background-color: #00a000;
+    border: none;
+    color: white;
+    font-size: 36px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.circle-button.easy {
+    background-color: #00a000;
+}
+
+.circle-button.medium {
+    background-color: #ff8c00;
+}
+
+.circle-button.hard {
+    background-color: #ff0000;
+}
+
+
+.circle-button:hover {
+    transform: scale(1.05);
+}
+
+
+
+
+
+
+
+
+
+
+
+
