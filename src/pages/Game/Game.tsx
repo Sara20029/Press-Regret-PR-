@@ -9,6 +9,7 @@ type LevelResponse = {
     difficulty: number;
     number: number;
     instruction: string;
+    type: string;
 };
 
 const difficultyMap: Record<string, number> = {
@@ -20,21 +21,72 @@ const difficultyMap: Record<string, number> = {
 const difficultyConfig = {
     easy: {
         title: "Press & Regret: Easy",
-        timer: 45,
+        timer: 8,
     },
     medium: {
         title: "Press & Regret: Medium",
-        timer: 30,
+        timer: 5,
     },
     hard: {
         title: "Press & Regret: Hard",
-        timer: 15,
+        timer: 3,
     },
 };
 
-export default function Game() {
+export function Game() {
     const {difficulty} = useParams();
+    const config = difficultyConfig[difficulty as keyof typeof difficultyConfig];
+    const difficultyId = difficulty ? difficultyMap[difficulty] : undefined;
+
     const [levels, setLevels] = useState<LevelResponse[] | null>(null);
+    const [currentLevelIndex, setCurrentLevelIndex] = useState(0);
+    const [runId, setRunId] = useState<number | null>(null);
+    const [timeLeft, setTimeLeft] = useState<number | null>(null);
+    const [result, setResult] = useState<string | null>(null);
+    const [gameStarted, setGameStarted] = useState(false);
+
+    useEffect(() => {
+        if (!difficultyId) return;
+        setLevels(null);
+        api.get<LevelResponse[]>(`/api/difficulties/${difficultyId}/levels`)
+            .then((r) => {
+                console.log(r.data);
+                setLevels(r.data);
+            })
+            .catch((err) => console.error(err));
+    }, [difficultyId]);
+
+
+    useEffect(() => {
+        if (timeLeft === null) return;
+
+        if (timeLeft <= 0) {
+            api.post(`api/runs/${runId}/finish`)
+                .then(r => setResult(r.data.status));
+            return;
+        }
+
+        const interval = setInterval(() => {
+            setTimeLeft(t => t! - 1);
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [timeLeft]);
+
+    useEffect(() => {
+        if (result === "SUCCESS") {
+            void handleNextLevel();
+        }
+    }, [result]);
+
+    useEffect(() => {
+        setGameStarted(false);
+        setCurrentLevelIndex(0);
+        setRunId(null);
+        setTimeLeft(null);
+        setResult(null);
+    }, [difficulty]);
+
 
     if (!difficulty) {
         return (
@@ -49,36 +101,37 @@ export default function Game() {
         );
     }
 
+    if (!difficultyId) return <Navigate to="/game" replace/>;
+    if (!levels) return <main style={{padding: 24}}>Lade…</main>;
+    if (levels.length === 0) return <main style={{padding: 24}}>Keine Level gefunden.</main>;
 
-    const difficultyId = difficulty ? difficultyMap[difficulty] : undefined;
+    const currentLevel = levels[currentLevelIndex];
 
-    useEffect(() => {
-        if (!difficultyId) return;
+    const handleStart = async () => {
+        setGameStarted(true);
+        const response = await api.post('/api/runs', {levelId: currentLevel.levelId});
+        setRunId(response.data.runId);
+        setTimeLeft(config.timer);
+        setResult(null);
+    };
 
-        setLevels(null);
+    const handlePress = async () => {
+        if (!runId) return;
+        const response = await api.post(`/api/runs/${runId}/press`);
+        setResult(response.data.status);
+    };
 
-        api.get<LevelResponse[]>(`/api/difficulties/${difficultyId}/levels`)
-            .then((r) => {
-                console.log(r.data);
-                setLevels(r.data);
-            })
-            .catch((err) => console.error(err));
-    }, [difficultyId]);
+    const handleNextLevel = async () => {
+        setCurrentLevelIndex(i => i + 1);
+        setRunId(null);
+        setTimeLeft(null);
+        setResult(null);
 
-    if (!difficultyId) {
-        return <Navigate to="/game" replace/>;
-    }
-
-    if (!levels) {
-        return <main style={{padding: 24}}>Lade…</main>;
-    }
-
-    if (levels.length === 0) {
-        return <main style={{padding: 24}}>Keine Level gefunden.</main>;
-    }
-
-    const firstLevel = levels[0];
-    const config = difficultyConfig[difficulty as keyof typeof difficultyConfig];
+        const nextLevel = levels[currentLevelIndex + 1];
+        const response = await api.post('/api/runs', {levelId: nextLevel.levelId});
+        setRunId(response.data.runId);
+        setTimeLeft(config.timer);
+    };
 
     return (
         <main className="game-page">
@@ -88,14 +141,24 @@ export default function Game() {
                 </header>
 
                 <div className="status">
-                    <div className="level">Level {firstLevel.number}</div>
-                    <div className="timer">{config.timer}</div>
+                    <div className="level">Level {currentLevel.number}</div>
+                    <div className="timer">{timeLeft ?? config.timer}</div>
                 </div>
 
                 <div className="center">
-                    <button className={`circle-button ${difficulty}`}>
-                        {firstLevel.instruction}
-                    </button>
+                    {!gameStarted && (
+                        <button onClick={handleStart}>Start</button>
+                    )}
+
+                    {gameStarted && result === null && (
+                        <button className={`circle-button ${difficulty}`} onClick={handlePress}>
+                            {currentLevel.instruction}
+                        </button>
+                    )}
+
+                    {result === "FAILED" && (
+                        <p>❌ Verloren!</p>
+                    )}
                 </div>
             </div>
         </main>

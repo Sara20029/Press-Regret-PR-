@@ -1,5 +1,5 @@
 import {BrowserRouter, Routes, Route, NavLink} from "react-router-dom";
-import Game from "./pages/Game/Game.tsx";
+import {Game} from "./pages/Game/Game.tsx";
 import About from "./pages/Content/About.tsx";
 import HowToPlay from "./pages/Content/HowToPlay.tsx";
 import Contact from "./pages/Content/Contact.tsx";
