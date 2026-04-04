@@ -1,7 +1,9 @@
 import "./Game.css";
 import {useEffect, useState} from "react";
 import {Link, Navigate, useParams} from "react-router-dom";
+import { difficultyMap, difficultyConfig } from "../../config/difficultyConfig";
 import {api} from "../../api/http.ts";
+import {DifficultyComplete} from "./DifficultyComplete.tsx";
 
 
 type LevelResponse = {
@@ -10,27 +12,6 @@ type LevelResponse = {
     number: number;
     instruction: string;
     type: string;
-};
-
-const difficultyMap: Record<string, number> = {
-    easy: 1,
-    medium: 2,
-    hard: 3,
-}
-
-const difficultyConfig = {
-    easy: {
-        title: "Press & Regret: Easy",
-        timer: 8,
-    },
-    medium: {
-        title: "Press & Regret: Medium",
-        timer: 5,
-    },
-    hard: {
-        title: "Press & Regret: Hard",
-        timer: 3,
-    },
 };
 
 export function Game() {
@@ -44,10 +25,12 @@ export function Game() {
     const [timeLeft, setTimeLeft] = useState<number | null>(null);
     const [result, setResult] = useState<string | null>(null);
     const [gameStarted, setGameStarted] = useState(false);
+    const [difficultyComplete, setDifficultyComplete] = useState(false);
 
     useEffect(() => {
         if (!difficultyId) return;
         setLevels(null);
+        setDifficultyComplete(false);
         api.get<LevelResponse[]>(`/api/difficulties/${difficultyId}/levels`)
             .then((r) => {
                 console.log(r.data);
@@ -62,7 +45,13 @@ export function Game() {
 
         if (timeLeft <= 0) {
             api.post(`api/runs/${runId}/finish`)
-                .then(r => setResult(r.data.status));
+                .then(async r => {
+                    if (r.data.status === "SUCCESS") {
+                        await handleNextLevel();
+                    } else {
+                        setResult("FAILED");
+                    }
+                });
             return;
         }
 
@@ -73,11 +62,6 @@ export function Game() {
         return () => clearInterval(interval);
     }, [timeLeft]);
 
-    useEffect(() => {
-        if (result === "SUCCESS") {
-            void handleNextLevel();
-        }
-    }, [result]);
 
     useEffect(() => {
         setGameStarted(false);
@@ -85,6 +69,7 @@ export function Game() {
         setRunId(null);
         setTimeLeft(null);
         setResult(null);
+        setDifficultyComplete(false);
     }, [difficulty]);
 
 
@@ -105,6 +90,10 @@ export function Game() {
     if (!levels) return <main style={{padding: 24}}>Lade…</main>;
     if (levels.length === 0) return <main style={{padding: 24}}>Keine Level gefunden.</main>;
 
+    if (difficultyComplete && difficulty) {
+        return <DifficultyComplete difficulty={difficulty}/>;
+    }
+
     const currentLevel = levels[currentLevelIndex];
 
     const handleStart = async () => {
@@ -118,19 +107,51 @@ export function Game() {
     const handlePress = async () => {
         if (!runId) return;
         const response = await api.post(`/api/runs/${runId}/press`);
-        setResult(response.data.status);
+        const status = response.data.status;
+        if (status === "SUCCESS") {
+            await handleNextLevel();
+        } else if (status === "FAILED") {
+            setResult("FAILED");
+        }
     };
 
     const handleNextLevel = async () => {
-        setCurrentLevelIndex(i => i + 1);
+        const nextIndex = currentLevelIndex + 1;
+
+        // All levels of this difficulty done → show complete screen
+        if (nextIndex >= levels.length) {
+            setRunId(null);
+            setTimeLeft(null);
+            setResult(null);
+            setDifficultyComplete(true);
+            return;
+        }
+
+        setCurrentLevelIndex(nextIndex);
         setRunId(null);
         setTimeLeft(null);
         setResult(null);
 
-        const nextLevel = levels[currentLevelIndex + 1];
+        const nextLevel = levels[nextIndex];
         const response = await api.post('/api/runs', {levelId: nextLevel.levelId});
         setRunId(response.data.runId);
         setTimeLeft(config.timer);
+    };
+
+    const handleMouseDown = async () => {
+        if (!runId) return;
+        await api.post(`/api/runs/${runId}/press`);
+    };
+
+    const handleMouseUp = async () => {
+        if (!runId) return;
+        const response = await api.post(`/api/runs/${runId}/release`);
+        const status = response.data.status;
+        if (status === "SUCCESS") {
+            await handleNextLevel();
+        } else if (status === "FAILED") {
+            setResult("FAILED");
+        }
     };
 
     return (
@@ -151,7 +172,13 @@ export function Game() {
                     )}
 
                     {gameStarted && result === null && (
-                        <button className={`circle-button ${difficulty}`} onClick={handlePress}>
+                        <button
+                            className={`circle-button ${difficulty}`}
+                            onClick={currentLevel.type !== "HOLD" ? handlePress : undefined}
+                            onMouseDown={currentLevel.type === "HOLD" ? handleMouseDown : undefined}
+                            onMouseUp={currentLevel.type === "HOLD" ? handleMouseUp : undefined}
+                            disabled={currentLevel.type === "READ_ONLY"}
+                        >
                             {currentLevel.instruction}
                         </button>
                     )}
