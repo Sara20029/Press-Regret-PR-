@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "./Feedback.css";
+import {api} from "../../api/http.ts";
+import * as React from "react";
 
 export default function Feedback() {
     const [name, setName] = useState("");
@@ -7,19 +9,16 @@ export default function Feedback() {
     const [rating, setRating] = useState("5");
     const [submitted, setSubmitted] = useState(false);
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        // Hier könntest du später dein Backend anbinden
-        console.log({
+        await api.post('/api/feedback', {
             name,
+            rating: parseInt(rating),
             message,
-            rating,
         });
 
         setSubmitted(true);
-
-        // Optional: Formular nach Absenden leeren
         setName("");
         setMessage("");
         setRating("5");
@@ -48,6 +47,7 @@ export default function Feedback() {
                             placeholder="Dein Name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
+                            required
                         />
                     </div>
 
