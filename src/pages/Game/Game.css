@@ -1,5 +1,6 @@
 .game-page {
     display: flex;
+    justify-content: center;
     align-items: center;
     padding: 40px;
     background: linear-gradient(135deg, #f4f7fb, #dfe9f3);
@@ -16,6 +17,7 @@
     display: flex;
     flex-direction: column;
     padding: 20px;
+    margin: auto;
 }
 
 .nav {
