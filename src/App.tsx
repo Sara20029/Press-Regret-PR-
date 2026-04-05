@@ -6,7 +6,7 @@ import Contact from "./pages/Content/Contact.tsx";
 import Home from "./pages/Home/Home.tsx";
 import Feedback from "./pages/Feedback/Feedback.tsx";
 import Achievements from "./pages/Achievements/Achievements.tsx";
-import Setting from "./pages/Setting/Setting.tsx";
+import {Setting} from "./pages/Setting/Setting.tsx";
 import Profile from "./pages/Profile/Profile.tsx";
 import "./App.css";
 
