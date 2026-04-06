@@ -1,15 +1,32 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import "./Setting.css";
+import {api} from "../../api/http.ts";
 
-export default function Setting() {
-    const [soundEnabled, setSoundEnabled] = useState(true);
-    const [darkMode, setDarkMode] = useState(false);
-    const [difficulty, setDifficulty] = useState("medium");
+export function Setting() {
+    const [theme, setThemeMode] = useState("dark");
     const [language, setLanguage] = useState("de");
+    const [soundEnabled, setSoundEnabled] = useState(true);
+    const [saved, setSaved] = useState(false);
 
-    const handleSave = () => {
-        alert("Einstellungen wurden gespeichert.");
-    };
+    useEffect(() => {
+        api.get('/api/settings')
+            .then(r => {
+                setThemeMode(r.data.theme);
+                setLanguage(r.data.language);
+                setSoundEnabled(r.data.soundEnabled);
+            });
+    }, []);
+
+    async function handleSave() {
+        await api.put('/api/settings', {
+            theme,
+            language,
+            soundEnabled,
+        });
+        setSaved(true);
+    }
+
+
 
     return (
         <div className="settings-page">
@@ -18,19 +35,6 @@ export default function Setting() {
                 <p className="settings-subtitle">
                     Passe hier deine Spieleinstellungen an.
                 </p>
-
-                <div className="settings-section">
-                    <h2>Profil</h2>
-                    <div className="setting-item">
-                        <label htmlFor="username">Benutzername</label>
-                        <input
-                            id="username"
-                            type="text"
-                            placeholder="Dein Name"
-                            className="settings-input"
-                        />
-                    </div>
-                </div>
 
                 <div className="settings-section">
                     <h2>Gameplay</h2>
@@ -47,25 +51,13 @@ export default function Setting() {
 
                     <div className="setting-item row">
                         <label htmlFor="darkmode">Dark Mode</label>
-                        <input
-                            id="darkmode"
-                            type="checkbox"
-                            checked={darkMode}
-                            onChange={() => setDarkMode(!darkMode)}
-                        />
-                    </div>
-
-                    <div className="setting-item">
-                        <label htmlFor="difficulty">Schwierigkeit</label>
                         <select
-                            id="difficulty"
-                            value={difficulty}
-                            onChange={(e) => setDifficulty(e.target.value)}
+                            value={theme}
+                            onChange={(e) => setThemeMode(e.target.value)}
                             className="settings-input"
                         >
-                            <option value="easy">Easy</option>
-                            <option value="medium">Medium</option>
-                            <option value="hard">Hard</option>
+                            <option value="dark">Dark</option>
+                            <option value="light">Light</option>
                         </select>
                     </div>
 
@@ -82,8 +74,8 @@ export default function Setting() {
                         </select>
                     </div>
                 </div>
-
-                <button className="save-button" onClick={handleSave}>
+                {saved && <p>✅ Einstellungen gespeichert!</p>}
+                <button className="save-button" onClick={() => handleSave()}>
                     Einstellungen speichern
                 </button>
             </div>

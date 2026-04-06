@@ -6,8 +6,8 @@ import Contact from "./pages/Content/Contact.tsx";
 import Home from "./pages/Home/Home.tsx";
 import Feedback from "./pages/Feedback/Feedback.tsx";
 import Achievements from "./pages/Achievements/Achievements.tsx";
-import Setting from "./pages/Setting/Setting.tsx";
-import Profile from "./pages/Profile/Profile.tsx";
+import {Setting} from "./pages/Setting/Setting.tsx";
+
 import "./App.css";
 
 function Nav() {
@@ -27,7 +27,6 @@ function Nav() {
                 <NavLink to="/feedback">Feedback</NavLink>
                 <NavLink to="/achievements">Achievements</NavLink>
                 <NavLink to="/setting">Setting</NavLink>
-                <NavLink to="/profile">Profile</NavLink>
             </nav>
         </header>
     );
@@ -50,8 +49,6 @@ export default function App() {
                         <Route path="/feedback" element={<Feedback />} />
                         <Route path="/achievements" element={<Achievements />} />
                         <Route path="/setting" element={<Setting />} />
-                        <Route path="/profile" element={<Profile />} />
-                        {/*<Route path="*" element={<Navigate to="/game/easy" replace />} />*/}
                     </Routes>
                 </main>
             </div>
