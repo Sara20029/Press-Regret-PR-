@@ -1,4 +1,4 @@
-import {BrowserRouter, Routes, Route, NavLink} from "react-router-dom";
+import {BrowserRouter, Routes, Route, NavLink, Navigate} from "react-router-dom";
 import {Game} from "./pages/Game/Game.tsx";
 import About from "./pages/Content/About.tsx";
 import HowToPlay from "./pages/Content/HowToPlay.tsx";
@@ -39,6 +39,7 @@ export default function App() {
                 <Nav />
                 <main className="page-content">
                     <Routes>
+                        <Route path="/" element={<Navigate to="/game" replace />} />
                         <Route path="/game" element={<Home />} />
                         <Route path="/game/:difficulty" element={<Game />} />
 
