@@ -14,7 +14,7 @@ function Nav() {
     return (
         <header className="nav-wrapper">
             <nav className="nav">
-                <NavLink to="/game">Home</NavLink>
+                <NavLink to="/game" end>Home</NavLink>
 
                 <NavLink to="/game/easy">Easy</NavLink>
                 <NavLink to="/game/medium">Medium</NavLink>
