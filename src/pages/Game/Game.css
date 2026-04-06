@@ -88,14 +88,7 @@
     transform: scale(1.05);
 }
 
-
-
-
-
-
-
-
-
-
-
-
+.circle-button:active {
+    transform: scale(0.95);
+    filter: brightness(0.85);
+}
