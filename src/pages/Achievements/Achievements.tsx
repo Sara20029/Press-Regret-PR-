@@ -1,5 +1,6 @@
 import "./Achievements.css";
 import {useEffect, useState} from "react";
+import {api} from "../../api/http.ts";
 
 type Achievement = {
     id: number;
@@ -8,21 +9,15 @@ type Achievement = {
     unlocked: boolean;
 };
 
-export default function Achievements() {
+export function Achievements() {
     const [achievements, setAchievements] = useState<Achievement[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/achievements")
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Failed to load achievements.");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setAchievements(data);
+        api.get<Achievement[]>('/api/achievements')
+            .then(r => {
+                setAchievements(r.data);
                 setLoading(false);
             })
             .catch(() => {
