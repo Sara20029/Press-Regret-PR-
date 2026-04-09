@@ -3,7 +3,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #f4f7fb, #dfe9f3);
+    background: transparent;
     padding: 24px;
     box-sizing: border-box;
+}
+
+.home-page h1 {
+    color: var(--text-color);
+}
+
+.home-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
 }

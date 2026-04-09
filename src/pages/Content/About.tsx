@@ -12,12 +12,12 @@ export default function About() {
         api.get<Content>("/api/content/about").then((r) => setData(r.data));
     }, []);
 
-    if (!data) return <main style={{ padding: 24 }}>Lade…</main>;
+    if (!data) return <main>Lade…</main>;
 
     return (
-        <main className="about-page" style={{ padding: 24, color: "white" }}>
-            <h1 style={{color: "black"}}>{data.title}</h1>
-            <p style={{color: "black"}}>{data.description}</p>
+        <main className="about-page">
+            <h1>{data.title}</h1>
+            <p>{data.description}</p>
         </main>
     );
 }
