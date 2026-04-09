@@ -5,9 +5,37 @@ html, body, #root {
   padding: 0;
 }
 
+body.light {
+  --bg-color: linear-gradient(135deg, #f4f7fb, #dfe9f3);
+  --text-color: #111111;
+  --nav-bg: #dfe9f3ff;
+  --nav-border: #d0d0d0;
+  --nav-link: #333333;
+  --nav-active: #b8c3cf;
+  --nav-hover: #cad0dc;
+  --button-bg: #b8c3cf;
+  --button-color: #ffffff;
+  --card-color: #ffffff;
+  --card-text-color: #111111;
+}
+
+body.dark {
+  --bg-color: #1f1f1f;
+  --text-color: #ffffff;
+  --nav-bg: #111111;
+  --nav-border: #2d2d2d;
+  --nav-link: #d8d8d8;
+  --nav-active: #3a3a3a;
+  --nav-hover: #2a2a2a;
+  --button-bg: #3a3a3a;
+  --button-color: #ffffff;
+  --card-color: #2a2a2a;
+  --card-text-color: #ffffff;
+}
+
 body {
-  background-color: #1f1f1f;
-  color: white;
+  background: var(--bg-color);
+  color: var(--text-color);
   font-family: Arial, sans-serif;
 }
 
@@ -22,8 +50,8 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
-  background-color: #181818;
-  border-bottom: 1px solid #2d2d2d;
+  background-color: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
   padding: 18px 24px;
   box-sizing: border-box;
   position: sticky;
@@ -43,7 +71,7 @@ body {
 
 /* Links */
 .nav a {
-  color: #d8d8d8;
+  color: var(--nav-link);
   text-decoration: none;
   font-size: 19px;
   font-weight: 500;
@@ -52,12 +80,12 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 .nav a.active {
-  background-color: #3a3a3a;
+  background-color: var(--nav-active);
   color: white;
 }
 
 .nav a:hover {
-  background-color: #2a2a2a;
+  background-color: var(--nav-hover);
   color: white;
 }
 
@@ -65,3 +93,4 @@ body {
 .page-content {
   flex: 1;
 }
+
