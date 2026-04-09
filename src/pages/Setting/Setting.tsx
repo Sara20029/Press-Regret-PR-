@@ -1,12 +1,14 @@
 import {useEffect, useState} from "react";
 import "./Setting.css";
 import {api} from "../../api/http.ts";
+import { useTheme } from "../../context/ThemeContext.tsx";
 
 export function Setting() {
-    const [theme, setThemeMode] = useState("dark");
-    const [language, setLanguage] = useState("de");
+    const [theme, setThemeMode] = useState("light");
+    const [language, setLanguage] = useState("en");
     const [soundEnabled, setSoundEnabled] = useState(true);
     const [saved, setSaved] = useState(false);
+    const { setTheme } = useTheme();
 
     useEffect(() => {
         api.get('/api/settings')
@@ -23,6 +25,7 @@ export function Setting() {
             language,
             soundEnabled,
         });
+        setTheme(theme)
         setSaved(true);
     }
 
@@ -50,7 +53,7 @@ export function Setting() {
                     </div>
 
                     <div className="setting-item row">
-                        <label htmlFor="darkmode">Dark Mode</label>
+                        <label htmlFor="themeMode">Theme Mode</label>
                         <select
                             value={theme}
                             onChange={(e) => setThemeMode(e.target.value)}

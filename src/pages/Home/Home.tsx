@@ -1,11 +1,10 @@
-import { Link } from "react-router-dom";
-import "./Home.css";
+import {Link} from "react-router-dom";
 
 export default function Home() {
     return (
-        <main className="home-page" style={{ padding: 24}}>
-            <h1 style={{color: "black"}}>Wähle eine Schwierigkeit</h1>
-            <div style={{ display: "flex", gap: 12, marginTop: 16, color: "black"}}>
+        <main className="home-page">
+            <h1>Wähle eine Schwierigkeit</h1>
+            <div className="home-buttons">
                 <Link to="/game/easy">
                     <button>Easy</button>
                 </Link>
