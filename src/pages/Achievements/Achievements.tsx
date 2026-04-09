@@ -1,9 +1,13 @@
 import "./Achievements.css";
 import {useEffect, useState} from "react";
 import {api} from "../../api/http.ts";
+import { useTranslation } from "react-i18next";
+
+
 
 type Achievement = {
     id: number;
+    key: string;
     title: string;
     description: string;
     unlocked: boolean;
@@ -13,6 +17,7 @@ export function Achievements() {
     const [achievements, setAchievements] = useState<Achievement[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const { t } = useTranslation();
 
     useEffect(() => {
         api.get<Achievement[]>('/api/achievements')
@@ -38,8 +43,8 @@ export function Achievements() {
     if (loading) {
         return (
             <main className="achievements-page">
-                <h1>Achievements</h1>
-                <p>Achievements are loading...</p>
+                <h1>{t('achievements.title')}</h1>
+                <p>{t('achievements.loading')}</p>
             </main>
         );
     }
@@ -47,7 +52,7 @@ export function Achievements() {
     if (error) {
         return (
             <main className="achievements-page">
-                <h1>Achievements</h1>
+                <h1>{t('achievements.title')}</h1>
                 <p>{error}</p>
             </main>
         );
@@ -57,10 +62,10 @@ export function Achievements() {
     return (
         <main className="achievements-page">
             <section className="achievements-header">
-                <h1>Achievements</h1>
-                <p>Here you can see all unlocked and locked achievements.</p>
+                <h1>{t('achievements.title')}</h1>
+                <p>{t('achievements.subtitle')}</p>
                 <p>
-                    Progress: {unlockedCount} / {achievements.length} ({progressPercent}
+                    {t('achievements.subtitle')}: {unlockedCount} / {achievements.length} ({progressPercent}
                     %)
                 </p>
 
@@ -82,8 +87,8 @@ export function Achievements() {
                             {achievement.unlocked ? "🏆" : "🔒"}
                         </div>
                         <div className="achievement-content">
-                            <h2>{achievement.title}</h2>
-                            <p>{achievement.description}</p>
+                            <h2>{t(`achievements.${achievement.key}.title`)}</h2>
+                            <p>{t(`achievements.${achievement.key}.description`)}</p>
                         </div>
                     </div>
                 ))}

@@ -2,6 +2,10 @@ import {useEffect, useState} from "react";
 import "./Setting.css";
 import {api} from "../../api/http.ts";
 import { useTheme } from "../../context/ThemeContext.tsx";
+import i18n from '../../i18n.ts';
+import { useTranslation } from "react-i18next";
+
+
 
 export function Setting() {
     const [theme, setThemeMode] = useState("light");
@@ -9,6 +13,7 @@ export function Setting() {
     const [soundEnabled, setSoundEnabled] = useState(true);
     const [saved, setSaved] = useState(false);
     const { setTheme } = useTheme();
+    const { t } = useTranslation();
 
     useEffect(() => {
         api.get('/api/settings')
@@ -16,6 +21,7 @@ export function Setting() {
                 setThemeMode(r.data.theme);
                 setLanguage(r.data.language);
                 setSoundEnabled(r.data.soundEnabled);
+                void i18n.changeLanguage(r.data.language);
             });
     }, []);
 
@@ -25,7 +31,8 @@ export function Setting() {
             language,
             soundEnabled,
         });
-        setTheme(theme)
+        setTheme(theme);
+        void i18n.changeLanguage(language);
         setSaved(true);
     }
 
@@ -34,16 +41,16 @@ export function Setting() {
     return (
         <div className="settings-page">
             <div className="settings-card">
-                <h1 className="settings-title">Settings</h1>
+                <h1 className="settings-title">{t('settings.title')}</h1>
                 <p className="settings-subtitle">
-                    Passe hier deine Spieleinstellungen an.
+                    {t('settings.subtitle')}.
                 </p>
 
                 <div className="settings-section">
-                    <h2>Gameplay</h2>
+                    <h2>{t('settings.section')}</h2>
 
                     <div className="setting-item row">
-                        <label htmlFor="sound">Sound</label>
+                        <label htmlFor="sound">{t('settings.sound')}</label>
                         <input
                             id="sound"
                             type="checkbox"
@@ -53,33 +60,33 @@ export function Setting() {
                     </div>
 
                     <div className="setting-item row">
-                        <label htmlFor="themeMode">Theme Mode</label>
+                        <label htmlFor="themeMode">{t('settings.themeMode')}</label>
                         <select
                             value={theme}
                             onChange={(e) => setThemeMode(e.target.value)}
                             className="settings-input"
                         >
-                            <option value="dark">Dark</option>
-                            <option value="light">Light</option>
+                            <option value="dark">{t('settings.dark')}</option>
+                            <option value="light">{t('settings.light')}</option>
                         </select>
                     </div>
 
                     <div className="setting-item">
-                        <label htmlFor="language">Sprache</label>
+                        <label htmlFor="language">{t('settings.language')}</label>
                         <select
                             id="language"
                             value={language}
                             onChange={(e) => setLanguage(e.target.value)}
                             className="settings-input"
                         >
-                            <option value="de">Deutsch</option>
-                            <option value="en">English</option>
+                            <option value="de">{t('settings.de')}</option>
+                            <option value="en">{t('settings.en')}</option>
                         </select>
                     </div>
                 </div>
-                {saved && <p>✅ Einstellungen gespeichert!</p>}
+                {saved && <p>✅ {t('settings.saved')}!</p>}
                 <button className="save-button" onClick={() => handleSave()}>
-                    Einstellungen speichern
+                    {t('settings.save')}
                 </button>
             </div>
         </div>
