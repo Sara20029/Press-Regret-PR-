@@ -1,8 +1,8 @@
 .achievements-page {
     min-height: 100vh;
     padding: 40px 24px;
-    background: linear-gradient(135deg, #f4f7fb, #dfe9f3);
-    color: #1f2937;
+    background: transparent;
+    color: var(--text-color);
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -20,7 +20,7 @@
 .achievements-header p {
     margin-bottom: 18px;
     font-size: 1rem;
-    color: #4b5563;
+    color: var(--text-color);
 }
 
 .achievements-list {
@@ -46,12 +46,12 @@
 }
 
 .achievement-card.unlocked {
-    background-color: #ffffff;
+    background-color: var(--card-color);
     border-left: 6px solid #22c55e;
 }
 
 .achievement-card.locked {
-    background-color: #f3f4f6;
+    background-color: var(--card-color);
     border-left: 6px solid #9ca3af;
     opacity: 0.85;
 }
@@ -69,12 +69,14 @@
 .achievement-content h2 {
     margin: 0 0 8px;
     font-size: 1.2rem;
+    color: var(--card-text-color);
 }
 
 .achievement-content p {
     margin: 0;
-    color: #4b5563;
+    color: var(--text-color);
     line-height: 1.5;
+    opacity: 0.7;
 }
 
 .progress-bar {

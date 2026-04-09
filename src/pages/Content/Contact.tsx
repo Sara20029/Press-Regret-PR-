@@ -21,15 +21,14 @@ export default function Contact() {
     }, []);
 
     if (!data) {
-        return <main style={{ padding: 24, color: "white" }}>Lade…</main>;
+        return <main>Lade…</main>;
     }
 
     return (
-        <main className="contact-page" style={{ padding: 24, color: "white" }}>
-            <h1 style={{color: "black"}}>{data.title}</h1>
-            <p style={{color: "black"}}>{data.description}</p>
-            <p style={{color: "black"}}>{data.email}</p>
-
+        <main className="contact-page">
+            <h1>{data.title}</h1>
+            <p>{data.description}</p>
+            <p>{data.email}</p>
         </main>
     );
 }
