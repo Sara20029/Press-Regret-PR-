@@ -5,8 +5,9 @@ import HowToPlay from "./pages/Content/HowToPlay.tsx";
 import Contact from "./pages/Content/Contact.tsx";
 import Home from "./pages/Home/Home.tsx";
 import Feedback from "./pages/Feedback/Feedback.tsx";
-import Achievements from "./pages/Achievements/Achievements.tsx";
+import {Achievements} from "./pages/Achievements/Achievements.tsx";
 import {Setting} from "./pages/Setting/Setting.tsx";
+import { ThemeProvider } from "./context/ThemeContext.tsx";
 
 import "./App.css";
 
@@ -14,7 +15,7 @@ function Nav() {
     return (
         <header className="nav-wrapper">
             <nav className="nav">
-                <NavLink to="/game">Home</NavLink>
+                <NavLink to="/game" end>Home</NavLink>
 
                 <NavLink to="/game/easy">Easy</NavLink>
                 <NavLink to="/game/medium">Medium</NavLink>
@@ -34,25 +35,27 @@ function Nav() {
 
 export default function App() {
     return (
-        <BrowserRouter>
-            <div className="app-layout">
-                <Nav />
-                <main className="page-content">
-                    <Routes>
-                        <Route path="/" element={<Navigate to="/game" replace />} />
-                        <Route path="/game" element={<Home />} />
-                        <Route path="/game/:difficulty" element={<Game />} />
+        <ThemeProvider>
+            <BrowserRouter>
+                <div className="app-layout">
+                    <Nav />
+                    <main className="page-content">
+                        <Routes>
+                            <Route path="/" element={<Navigate to="/game" replace />} />
+                            <Route path="/game" element={<Home />} />
+                            <Route path="/game/:difficulty" element={<Game />} />
 
-                        <Route path="/content/about" element={<About />} />
-                        <Route path="/content/how-to-play" element={<HowToPlay />} />
-                        <Route path="/content/contact" element={<Contact />} />
+                            <Route path="/content/about" element={<About />} />
+                            <Route path="/content/how-to-play" element={<HowToPlay />} />
+                            <Route path="/content/contact" element={<Contact />} />
 
-                        <Route path="/feedback" element={<Feedback />} />
-                        <Route path="/achievements" element={<Achievements />} />
-                        <Route path="/setting" element={<Setting />} />
-                    </Routes>
-                </main>
-            </div>
-        </BrowserRouter>
+                            <Route path="/feedback" element={<Feedback />} />
+                            <Route path="/achievements" element={<Achievements />} />
+                            <Route path="/setting" element={<Setting />} />
+                        </Routes>
+                    </main>
+                </div>
+            </BrowserRouter>
+        </ThemeProvider>
     );
 }

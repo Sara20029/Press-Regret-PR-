@@ -12,6 +12,15 @@ type LevelResponse = {
     number: number;
     instruction: string;
     type: string;
+    imageUrl: string | null;
+};
+
+const imagePositionMap: Record<number, { position: "corner" | "center", size: "small" | "large" }> = {
+    11: { position:"corner", size: "small" },
+    14: { position:"corner", size: "small" },
+    12: { position:"center", size: "small" },
+    21: { position:"center", size: "small" },
+    22: { position:"center", size: "large" },
 };
 
 export function Game() {
@@ -26,6 +35,7 @@ export function Game() {
     const [result, setResult] = useState<string | null>(null);
     const [gameStarted, setGameStarted] = useState(false);
     const [difficultyComplete, setDifficultyComplete] = useState(false);
+
 
     useEffect(() => {
         if (!difficultyId) return;
@@ -154,6 +164,8 @@ export function Game() {
         }
     };
 
+    const imageConfig = imagePositionMap[currentLevel.levelId] ?? { position: "corner", size: "small" };
+
     return (
         <main className="game-page">
             <div className="game-box">
@@ -164,6 +176,16 @@ export function Game() {
                 <div className="status">
                     <div className="level">Level {currentLevel.number}</div>
                     <div className="timer">{timeLeft ?? config.timer}</div>
+                </div>
+
+                <div className={`level-visual-corner-${imageConfig.size}`}>
+                    {gameStarted && currentLevel.imageUrl && imageConfig.position === "corner" && (
+                        <img
+                            src={`/src/assets/images/${currentLevel.imageUrl}`}
+                            alt=""
+                            draggable={false}
+                        />
+                    )}
                 </div>
 
                 <div className="center">
@@ -180,6 +202,15 @@ export function Game() {
                             disabled={currentLevel.type === "READ_ONLY"}
                         >
                             {currentLevel.instruction}
+                            {currentLevel.imageUrl && imageConfig.position === "center" && (
+                                <div className={`level-visual-center-${imageConfig.size}`}>
+                                    <img
+                                        src={`/src/assets/images/${currentLevel.imageUrl}`}
+                                        alt=""
+                                        draggable={false}
+                                    />
+                                </div>
+                            )}
                         </button>
                     )}
 
