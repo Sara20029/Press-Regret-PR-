@@ -5,8 +5,12 @@ import { difficultyMap, difficultyConfig } from "../../config/difficultyConfig";
 import {api} from "../../api/http.ts";
 import {DifficultyComplete} from "./DifficultyComplete.tsx";
 import { useTranslation } from "react-i18next";
+import { useSound } from "../../context/SoundContext.tsx";
 
 
+const buttonClickSound = new Audio('/src/assets/sounds/buttonClick.mp3');
+const difficultySuccessSound = new Audio('/src/assets/sounds/difficultySuccess.mp3');
+const gameOverSound = new Audio('/src/assets/sounds/gameOver.wav');
 
 
 type LevelResponse = {
@@ -40,6 +44,9 @@ export function Game() {
     const [difficultyComplete, setDifficultyComplete] = useState(false);
     const { t } = useTranslation();
 
+    const { soundEnabled } = useSound();
+
+
 
     useEffect(() => {
         if (!difficultyId) return;
@@ -63,7 +70,12 @@ export function Game() {
                     if (r.data.status === "SUCCESS") {
                         await handleNextLevel();
                     } else {
-                        setResult("FAILED");
+                        if (!result) {
+                            if (soundEnabled) {
+                                void gameOverSound.play();
+                            }
+                            setResult("FAILED");
+                        }
                     }
                 });
             return;
@@ -119,21 +131,34 @@ export function Game() {
     };
 
     const handlePress = async () => {
+        if(soundEnabled) {
+            buttonClickSound.currentTime = 0;
+            void buttonClickSound.play();
+        }
         if (!runId) return;
         const response = await api.post(`/api/runs/${runId}/press`);
         const status = response.data.status;
         if (status === "SUCCESS") {
             await handleNextLevel();
         } else if (status === "FAILED") {
-            setResult("FAILED");
+            if (!result) {
+                if (soundEnabled) {
+                    void gameOverSound.play();
+                }
+                setResult("FAILED");
+            }
         }
     };
 
     const handleNextLevel = async () => {
         const nextIndex = currentLevelIndex + 1;
 
+
         // All levels of this difficulty done → show complete screen
         if (nextIndex >= levels.length) {
+            if(soundEnabled) {
+                void difficultySuccessSound.play();
+            }
             setRunId(null);
             setTimeLeft(null);
             setResult(null);
@@ -153,6 +178,9 @@ export function Game() {
     };
 
     const handleMouseDown = async () => {
+        if(soundEnabled) {
+            void buttonClickSound.play();
+        }
         if (!runId) return;
         await api.post(`/api/runs/${runId}/press`);
     };
@@ -164,7 +192,12 @@ export function Game() {
         if (status === "SUCCESS") {
             await handleNextLevel();
         } else if (status === "FAILED") {
-            setResult("FAILED");
+            if (!result) {
+                if (soundEnabled) {
+                    void gameOverSound.play();
+                }
+                setResult("FAILED");
+            }
         }
     };
 
