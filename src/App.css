@@ -51,7 +51,6 @@ body {
   flex-direction: column;
 }
 
-/* Oberer Bereich */
 .nav-wrapper {
   width: 100%;
   display: flex;
@@ -63,27 +62,28 @@ body {
   position: sticky;
   top: 0;
   z-index: 1000;
+  min-height: 80px;
+  align-items: center;
 }
 
-/* Navigation selbst */
 .nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
+  gap: 4px;
+  flex-wrap: nowrap;
   max-width: 1200px;
 }
 
-/* Links */
 .nav a {
   color: var(--nav-link);
   text-decoration: none;
-  font-size: 19px;
+  font-size: 16px;
   font-weight: 500;
-  padding: 8px 14px;
+  padding: 8px 10px;
   border-radius: 10px;
   transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
 }
 .nav a.active {
   background-color: var(--nav-active);
@@ -95,7 +95,6 @@ body {
   color: white;
 }
 
-/* Inhaltsbereich */
 .page-content {
   flex: 1;
 }
