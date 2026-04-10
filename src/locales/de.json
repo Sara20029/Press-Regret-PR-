@@ -12,7 +12,13 @@
     "setting": "Einstellungen"
   },
   "home": {
-    "title": "Wähle eine Schwierigkeit"
+    "title": "Wähle eine Schwierigkeit",
+    "welcome": "Teste deine Reaktion und Konzentration",
+    "hint": "Die Schwierigkeitsstufen bauen aufeinander auf. Wir empfehlen mit der Schwierigkeit <1>Einfach</1> zu starten.",
+    "recommended": "Empfohlen",
+    "easyDesc": "Perfekt zum Einstieg. Lerne die Mechaniken kennen.",
+    "mediumDesc": "Für Fortgeschrittene. Schnellere Reaktionen gefragt.",
+    "hardDesc": "Maximale Herausforderung. Nur für Profis."
   },
   "game": {
     "loading": "Lade",

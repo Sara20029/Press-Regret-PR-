@@ -17,6 +17,9 @@ body.light {
   --button-color: #ffffff;
   --card-color: #ffffff;
   --card-text-color: #111111;
+  --hint-bg: #fffbeb;
+  --hint-border: #f59e0b44;
+  --hint-text: #92400e;
 }
 
 body.dark {
@@ -31,6 +34,9 @@ body.dark {
   --button-color: #ffffff;
   --card-color: #2a2a2a;
   --card-text-color: #ffffff;
+  --hint-bg: #2a1f00;
+  --hint-border: #7a520066;
+  --hint-text: #fcd34d;
 }
 
 body {

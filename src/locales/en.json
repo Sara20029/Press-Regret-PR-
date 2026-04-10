@@ -12,7 +12,13 @@
     "setting": "Setting"
   },
   "home": {
-    "title": "Choose a difficulty"
+    "title": "Choose a difficulty",
+    "welcome": "Test your reaction and focus",
+    "hint": "Difficulty levels build on each other. We recommend starting with difficulty <1>Easy</1>.",
+    "recommended": "Recommended",
+    "easyDesc": "Perfect for beginners. Learn the mechanics.",
+    "mediumDesc": "For advanced players. Faster reactions required.",
+    "hardDesc": "Maximum challenge. Pros only"
   },
   "game": {
     "loading": "Loading",
