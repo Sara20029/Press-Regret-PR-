@@ -1,0 +1,77 @@
+{
+  "nav": {
+    "home": "Home",
+    "easy": "Einfach",
+    "medium": "Mittel",
+    "hard": "Schwer",
+    "howToPlay": "Wie spielt man",
+    "about": "Über uns",
+    "contact": "Kontakt",
+    "feedback": "Feedback",
+    "achievements": "Errungenschaften",
+    "setting": "Einstellungen"
+  },
+  "home": {
+    "title": "Wähle eine Schwierigkeit"
+  },
+  "game": {
+    "loading": "Lade",
+    "noLevels": "Keine Level gefunden",
+    "start": "Starten",
+    "gameOver": "Verloren"
+  },
+  "achievements": {
+    "title": "Errungenschaften",
+    "loading": "Errungenschaften werden geladen...",
+    "firstLevel": {
+      "title": "Erstes Level",
+      "description": "Schließe das erste Level ab!"
+    },
+    "easyDifficulty": {
+      "title": "Schwierigkeit Leicht",
+      "description": "Schließe alle Levels der Schwierigkeit Leicht ab!"
+    },
+    "mediumDifficulty": {
+      "title": "Schwierigkeit Mittel",
+      "description": "Schließe alle Levels der Schwierigkeit Mittel ab!"
+    },
+    "hardDifficulty": {
+      "title": "Schwierigkeit Schwer",
+      "description": "Schließe alle Levels der Schwierigkeit Schwer ab!"
+    },
+    "subtitle": "Hier siehst du alle freigeschalteten und gesperrten Errungenschaften.",
+    "progress": "Fortschritt"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "subtitle": "Passe hier deine Spieleinstellungen an",
+    "section": "Gameplay",
+    "sound": "Ton",
+    "themeMode": "Themenmodus",
+    "dark": "dunkel",
+    "light": "hell",
+    "language": "Sprache",
+    "de": "Deutsch",
+    "en": "Englisch",
+    "saved": "Einstellungen gespeichert",
+    "save": "Einstellungen Speichern"
+  },
+  "difficultyComplete": {
+    "complete-btn": "Zurück zur Startseite"
+  },
+  "feedback": {
+    "intro": "Teile uns mit, wie dir das Spiel gefällt oder was wir verbessern können",
+    "success-message": "Vielen Dank für dein Feedback",
+    "name": "Name",
+    "your-name": "Dein Name",
+    "rating": "Bewertung",
+    "very-good": "Sehr gut",
+    "good": "Gut",
+    "okay": "Mittelmäßig",
+    "less-good": "Weniger gut",
+    "bad": "Schlecht",
+    "message": "Nachricht",
+    "write": "Schreibe hier dein Feedback...",
+    "submit-button": "Feedback absenden"
+  }
+}

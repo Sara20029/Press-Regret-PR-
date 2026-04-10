@@ -1,0 +1,78 @@
+{
+  "nav": {
+    "home": "Home",
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
+    "howToPlay": "How to play",
+    "about": "About",
+    "contact": "Contact",
+    "feedback": "Feedback",
+    "achievements": "Achievements",
+    "setting": "Setting"
+  },
+  "home": {
+    "title": "Choose a difficulty"
+  },
+  "game": {
+    "loading": "Loading",
+    "noLevels": "Levels not found",
+    "start": "Start",
+    "gameOver": "Game Over"
+  },
+  "achievements": {
+    "title": "Achievements",
+    "loading": "Achievements are loading...",
+    "firstLevel": {
+      "title": "First Level",
+      "description": "Complete the first level!"
+    },
+    "easyDifficulty": {
+      "title": "Easy Difficulty",
+      "description": "Complete all easy levels!"
+    },
+    "mediumDifficulty": {
+      "title": "Medium Difficulty",
+      "description": "Complete all medium levels!"
+    },
+    "hardDifficulty": {
+      "title": "Hard Difficulty",
+      "description": "Complete all hard levels!"
+    },
+    "subtitle": "Here you can see all unlocked and locked achievements.",
+    "progress": "Progress"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Adjust your game settings here",
+    "section": "Gameplay",
+    "sound": "Sound",
+    "themeMode": "Theme Mode",
+    "dark": "Dark",
+    "light": "Light",
+    "language": "Language",
+    "de": "German",
+    "en": "English",
+    "saved": "Settings saved",
+    "save": "Save settings"
+
+  },
+  "difficultyComplete": {
+    "complete-btn": "Back to home"
+  },
+  "feedback": {
+    "intro": "Let us know how you like the game or what we can improve",
+    "success-message": "Thank you for your feedback",
+    "name": "Name",
+    "your-name": "Your name",
+    "rating": "rating",
+    "very-good": "very good",
+    "good": "good",
+    "okay": "okay",
+    "less-good": "less good",
+    "bad": "bad",
+    "message": "Message",
+    "write": "Write your feedback here...",
+    "submit-button": "Submit feedback"
+  }
+}

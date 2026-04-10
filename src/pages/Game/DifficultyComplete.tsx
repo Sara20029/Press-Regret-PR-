@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { nextDifficulty, difficultyCompleteConfig } from "../../config/difficultyConfig";
+import { useTranslation } from 'react-i18next';
+
+
 
 type Props = {
     difficulty: string;
@@ -7,6 +10,7 @@ type Props = {
 
 export function DifficultyComplete({ difficulty }: Props) {
     const navigate = useNavigate();
+    const { t } = useTranslation();
     const completeConfig = difficultyCompleteConfig[difficulty];
     const next = nextDifficulty[difficulty];
 
@@ -23,7 +27,7 @@ export function DifficultyComplete({ difficulty }: Props) {
                     </button>
                 ) : (
                     <button className="complete-btn" onClick={() => navigate("/game")}>
-                        Zurück zur Startseite
+                        {t('settings.subtitle')}
                     </button>
                 )}
             </div>

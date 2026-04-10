@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { api } from "../../api/http.ts";
 import "./Contact.css";
+import { useTranslation } from 'react-i18next';
+
+
 
 type Content = {
     title: string;
@@ -10,6 +13,7 @@ type Content = {
 
 export default function Contact() {
     const [data, setData] = useState<Content | null>(null);
+    const { t } = useTranslation();
 
     useEffect(() => {
         api.get<Content>("/api/content/contact")
@@ -21,7 +25,7 @@ export default function Contact() {
     }, []);
 
     if (!data) {
-        return <main>Lade…</main>;
+        return <main>{t('game.loading')}…</main>;
     }
 
     return (

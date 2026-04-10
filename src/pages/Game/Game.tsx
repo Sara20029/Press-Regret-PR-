@@ -4,6 +4,13 @@ import {Link, Navigate, useParams} from "react-router-dom";
 import { difficultyMap, difficultyConfig } from "../../config/difficultyConfig";
 import {api} from "../../api/http.ts";
 import {DifficultyComplete} from "./DifficultyComplete.tsx";
+import { useTranslation } from "react-i18next";
+import { useSound } from "../../context/SoundContext.tsx";
+
+
+const buttonClickSound = new Audio('/src/assets/sounds/buttonClick.mp3');
+const difficultySuccessSound = new Audio('/src/assets/sounds/difficultySuccess.mp3');
+const gameOverSound = new Audio('/src/assets/sounds/gameOver.wav');
 
 
 type LevelResponse = {
@@ -35,6 +42,10 @@ export function Game() {
     const [result, setResult] = useState<string | null>(null);
     const [gameStarted, setGameStarted] = useState(false);
     const [difficultyComplete, setDifficultyComplete] = useState(false);
+    const { t } = useTranslation();
+
+    const { soundEnabled } = useSound();
+
 
 
     useEffect(() => {
@@ -59,7 +70,12 @@ export function Game() {
                     if (r.data.status === "SUCCESS") {
                         await handleNextLevel();
                     } else {
-                        setResult("FAILED");
+                        if (!result) {
+                            if (soundEnabled) {
+                                void gameOverSound.play();
+                            }
+                            setResult("FAILED");
+                        }
                     }
                 });
             return;
@@ -86,19 +102,19 @@ export function Game() {
     if (!difficulty) {
         return (
             <main style={{padding: 24}}>
-                <h1>Wähle eine Schwierigkeit</h1>
+                <h1>{t('home.title')}</h1>
                 <div style={{display: "flex", gap: 12, marginTop: 16}}>
-                    <Link to="/game/easy">Easy</Link>
-                    <Link to="/game/medium">Medium</Link>
-                    <Link to="/game/hard">Hard</Link>
+                    <Link to="/game/easy">{t('nav.easy')}</Link>
+                    <Link to="/game/medium">{t('nav.medium')}</Link>
+                    <Link to="/game/hard">{t('nav.hard')}</Link>
                 </div>
             </main>
         );
     }
 
     if (!difficultyId) return <Navigate to="/game" replace/>;
-    if (!levels) return <main style={{padding: 24}}>Lade…</main>;
-    if (levels.length === 0) return <main style={{padding: 24}}>Keine Level gefunden.</main>;
+    if (!levels) return <main style={{padding: 24}}>{t('game.loading')}…</main>;
+    if (levels.length === 0) return <main style={{padding: 24}}>{t('game.noLevels')}.</main>;
 
     if (difficultyComplete && difficulty) {
         return <DifficultyComplete difficulty={difficulty}/>;
@@ -115,21 +131,34 @@ export function Game() {
     };
 
     const handlePress = async () => {
+        if(soundEnabled) {
+            buttonClickSound.currentTime = 0;
+            void buttonClickSound.play();
+        }
         if (!runId) return;
         const response = await api.post(`/api/runs/${runId}/press`);
         const status = response.data.status;
         if (status === "SUCCESS") {
             await handleNextLevel();
         } else if (status === "FAILED") {
-            setResult("FAILED");
+            if (!result) {
+                if (soundEnabled) {
+                    void gameOverSound.play();
+                }
+                setResult("FAILED");
+            }
         }
     };
 
     const handleNextLevel = async () => {
         const nextIndex = currentLevelIndex + 1;
 
+
         // All levels of this difficulty done → show complete screen
         if (nextIndex >= levels.length) {
+            if(soundEnabled) {
+                void difficultySuccessSound.play();
+            }
             setRunId(null);
             setTimeLeft(null);
             setResult(null);
@@ -149,6 +178,9 @@ export function Game() {
     };
 
     const handleMouseDown = async () => {
+        if(soundEnabled) {
+            void buttonClickSound.play();
+        }
         if (!runId) return;
         await api.post(`/api/runs/${runId}/press`);
     };
@@ -160,7 +192,12 @@ export function Game() {
         if (status === "SUCCESS") {
             await handleNextLevel();
         } else if (status === "FAILED") {
-            setResult("FAILED");
+            if (!result) {
+                if (soundEnabled) {
+                    void gameOverSound.play();
+                }
+                setResult("FAILED");
+            }
         }
     };
 
@@ -190,7 +227,7 @@ export function Game() {
 
                 <div className="center">
                     {!gameStarted && (
-                        <button onClick={handleStart}>Start</button>
+                        <button onClick={handleStart}>{t('game.start')}</button>
                     )}
 
                     {gameStarted && result === null && (
@@ -215,7 +252,7 @@ export function Game() {
                     )}
 
                     {result === "FAILED" && (
-                        <p>❌ Verloren!</p>
+                        <p>❌ {t('game.gameOver')}!</p>
                     )}
                 </div>
             </div>
