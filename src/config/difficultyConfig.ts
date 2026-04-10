@@ -27,27 +27,27 @@ export const nextDifficulty: Record<string, string | null> = {
 };
 
 export const difficultyCompleteConfig: Record<string, {
-    title: string;
-    subtitle: string;
+    titleKey: string;
+    subtitleKey: string;
     emoji: string;
-    nextLabel: string | null;
+    nextLabelKey: string | null;
 }> = {
     easy: {
-        title: "Easy gemeistert!",
-        subtitle: "Du hast alle Easy-Level geschafft. Bereit für mehr?",
+        titleKey: "difficultyComplete.easy.title",
+        subtitleKey: "difficultyComplete.easy.subtitle",
         emoji: "🎉",
-        nextLabel: "Weiter zu Medium",
+        nextLabelKey: "difficultyComplete.easy.nextLabel",
     },
     medium: {
-        title: "Medium gemeistert!",
-        subtitle: "Nicht schlecht! Jetzt wird's richtig ernst.",
+        titleKey: "difficultyComplete.medium.title",
+        subtitleKey: "difficultyComplete.medium.subtitle",
         emoji: "🔥",
-        nextLabel: "Weiter zu Hard",
+        nextLabelKey: "difficultyComplete.medium.nextLabel",
     },
     hard: {
-        title: "Spiel geschafft!",
-        subtitle: "Unglaublich – du hast alle Level gemeistert. Respekt!",
+        titleKey: "difficultyComplete.hard.title",
+        subtitleKey: "difficultyComplete.hard.subtitle",
         emoji: "🏆",
-        nextLabel: null,
+        nextLabelKey: null,
     },
 };

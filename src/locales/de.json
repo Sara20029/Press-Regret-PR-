@@ -58,7 +58,21 @@
     "save": "Einstellungen Speichern"
   },
   "difficultyComplete": {
-    "backToHome": "Zurück zur Startseite"
+    "backToHome": "Zurück zur Startseite",
+    "easy": {
+      "title": "Easy gemeistert!",
+      "subtitle": "Du hast alle Easy-Level geschafft. Bereit für mehr?",
+      "nextLabel": "Weiter zu Medium"
+    },
+    "medium": {
+      "title": "Medium gemeistert!",
+      "subtitle": "Nicht schlecht! Jetzt wird's richtig ernst.",
+      "nextLabel": "Weiter zu Hard"
+    },
+    "hard": {
+      "title": "Spiel geschafft!",
+      "subtitle": "Unglaublich – du hast alle Level gemeistert. Respekt!"
+    }
   },
   "feedback": {
     "intro": "Teile uns mit, wie dir das Spiel gefällt oder was wir verbessern können",

@@ -59,7 +59,21 @@
 
   },
   "difficultyComplete": {
-    "backToHome": "Back to Home"
+    "backToHome": "Back to Home",
+    "easy": {
+      "title": "Easy mastered!",
+      "subtitle": "You completed all easy levels. Ready for more?",
+      "nextLabel": "Continue to Medium"
+    },
+    "medium": {
+      "title": "Medium mastered!",
+      "subtitle": "Not bad! Now it gets serious.",
+      "nextLabel": "Continue to Hard"
+    },
+    "hard": {
+      "title": "Game completed!",
+      "subtitle": "Incredible – you mastered all levels. Respect!"
+    }
   },
   "feedback": {
     "intro": "Let us know how you like the game or what we can improve",
