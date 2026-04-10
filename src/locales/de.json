@@ -73,5 +73,8 @@
     "message": "Nachricht",
     "write": "Schreibe hier dein Feedback...",
     "submit-button": "Feedback absenden"
+  },
+  "popup": {
+    "unlocked": "Errungenschaft freigeschaltet!"
   }
 }

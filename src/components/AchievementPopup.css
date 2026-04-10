@@ -1,0 +1,38 @@
+.achievement-popup {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #22c55e;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: slideDown 0.3s ease;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.achievement-popup-icon {
+    font-size: 1.5rem;
+}
+
+.achievement-popup-label {
+    margin: 0;
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+.achievement-popup-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
