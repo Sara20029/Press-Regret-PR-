@@ -18,7 +18,8 @@
     "loading": "Lade",
     "noLevels": "Keine Level gefunden",
     "start": "Starten",
-    "gameOver": "Verloren"
+    "gameOver": "Verloren",
+    "reset": "Neustart"
   },
   "achievements": {
     "title": "Errungenschaften",
@@ -57,7 +58,7 @@
     "save": "Einstellungen Speichern"
   },
   "difficultyComplete": {
-    "complete-btn": "Zurück zur Startseite"
+    "backToHome": "Zurück zur Startseite"
   },
   "feedback": {
     "intro": "Teile uns mit, wie dir das Spiel gefällt oder was wir verbessern können",

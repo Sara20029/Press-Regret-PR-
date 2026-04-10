@@ -18,7 +18,8 @@
     "loading": "Loading",
     "noLevels": "Levels not found",
     "start": "Start",
-    "gameOver": "Game Over"
+    "gameOver": "Game Over",
+    "reset": "New Game"
   },
   "achievements": {
     "title": "Achievements",
@@ -58,7 +59,7 @@
 
   },
   "difficultyComplete": {
-    "complete-btn": "Back to home"
+    "backToHome": "Back to Home"
   },
   "feedback": {
     "intro": "Let us know how you like the game or what we can improve",

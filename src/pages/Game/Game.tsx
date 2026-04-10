@@ -209,6 +209,14 @@ export function Game() {
         }
     };
 
+    const handleReset = () =>{
+        setCurrentLevelIndex(0);
+        setRunId(null);
+        setTimeLeft(null);
+        setResult(null);
+        setGameStarted(false);
+    }
+
     return (
         <main className="game-page">
             <div className="game-box">
@@ -265,7 +273,10 @@ export function Game() {
                     )}
 
                     {result === "FAILED" && (
-                        <p>❌ {t('game.gameOver')}!</p>
+                        <div>
+                            <p>❌ {t('game.gameOver')}!</p>
+                            <button onClick={handleReset}>{t('game.reset')}</button>
+                        </div>
                     )}
                 </div>
             </div>

@@ -1,9 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { nextDifficulty, difficultyCompleteConfig } from "../../config/difficultyConfig";
 import { useTranslation } from 'react-i18next';
-import {AchievementPopup} from "../../components/AchievementPopup.tsx";
-
-
+import { AchievementPopup } from "../../components/AchievementPopup.tsx";
 
 type Props = {
     difficulty: string;
@@ -19,25 +17,28 @@ export function DifficultyComplete({ difficulty, achievementKey }: Props) {
     return (
         <main className="game-page">
             {achievementKey && (
-                <AchievementPopup
-                    achievementKey={achievementKey}
-                    onClose={() => {}}
-                />
+                <AchievementPopup achievementKey={achievementKey} onClose={() => {}}/>
             )}
             <div className="game-box complete-screen">
                 <div className="complete-emoji">{completeConfig.emoji}</div>
                 <h1 className="complete-title">{completeConfig.title}</h1>
                 <p className="complete-subtitle">{completeConfig.subtitle}</p>
 
-                {next ? (
+                {next && (
                     <button className="complete-btn" onClick={() => navigate(`/game/${next}`)}>
                         {completeConfig.nextLabel}
                     </button>
-                ) : (
+                )}
+
+                {!next && (
                     <button className="complete-btn" onClick={() => navigate("/game")}>
-                        {t('settings.subtitle')}
+                        {t('difficultyComplete.backToHome')}
                     </button>
                 )}
+
+                <button className="complete-btn" onClick={() => navigate(`/game/${difficulty}`)}>
+                    {t('game.reset')}
+                </button>
             </div>
         </main>
     );
