@@ -1,11 +1,12 @@
 import "./Game.css";
 import {useEffect, useState} from "react";
 import {Link, Navigate, useParams} from "react-router-dom";
-import { difficultyMap, difficultyConfig } from "../../config/difficultyConfig";
+import {difficultyMap, difficultyConfig} from "../../config/difficultyConfig";
 import {api} from "../../api/http.ts";
 import {DifficultyComplete} from "./DifficultyComplete.tsx";
-import { useTranslation } from "react-i18next";
-import { useSound } from "../../context/SoundContext.tsx";
+import {useTranslation} from "react-i18next";
+import {useSound} from "../../context/SoundContext.tsx";
+import {AchievementPopup} from "../../components/AchievementPopup.tsx";
 
 
 const buttonClickSound = new Audio('/src/assets/sounds/buttonClick.mp3');
@@ -42,10 +43,18 @@ export function Game() {
     const [result, setResult] = useState<string | null>(null);
     const [gameStarted, setGameStarted] = useState(false);
     const [difficultyComplete, setDifficultyComplete] = useState(false);
-    const { t } = useTranslation();
+    const [unlockedAchievement, setUnlockedAchievement] = useState<string | null>(null);
+    const [completionAchievement, setCompletionAchievement] = useState<string | null>(null);
 
-    const { soundEnabled } = useSound();
+    const {t} = useTranslation();
+    const {soundEnabled} = useSound();
 
+    const handleAchievement = (key: string | null) => {
+        if (key) {
+            setUnlockedAchievement(key);
+            setTimeout(() => setUnlockedAchievement(null), 3000);
+        }
+    };
 
 
     useEffect(() => {
@@ -68,12 +77,12 @@ export function Game() {
             api.post(`api/runs/${runId}/finish`)
                 .then(async r => {
                     if (r.data.status === "SUCCESS") {
+                        handleAchievement(r.data.unlockedAchievementKey);
+                        await new Promise(resolve => setTimeout(resolve, 100));
                         await handleNextLevel();
                     } else {
                         if (!result) {
-                            if (soundEnabled) {
-                                void gameOverSound.play();
-                            }
+                            if (soundEnabled) void gameOverSound.play();
                             setResult("FAILED");
                         }
                     }
@@ -115,12 +124,13 @@ export function Game() {
     if (!difficultyId) return <Navigate to="/game" replace/>;
     if (!levels) return <main style={{padding: 24}}>{t('game.loading')}…</main>;
     if (levels.length === 0) return <main style={{padding: 24}}>{t('game.noLevels')}.</main>;
-
-    if (difficultyComplete && difficulty) {
-        return <DifficultyComplete difficulty={difficulty}/>;
+    if (difficultyComplete && difficulty)  {
+        return <DifficultyComplete difficulty={difficulty} achievementKey={completionAchievement}/>;
     }
 
+
     const currentLevel = levels[currentLevelIndex];
+    const imageConfig = imagePositionMap[currentLevel.levelId] ?? { position: "corner", size: "small" };
 
     const handleStart = async () => {
         setGameStarted(true);
@@ -131,20 +141,22 @@ export function Game() {
     };
 
     const handlePress = async () => {
+        if (!runId) return;
         if(soundEnabled) {
             buttonClickSound.currentTime = 0;
             void buttonClickSound.play();
         }
-        if (!runId) return;
         const response = await api.post(`/api/runs/${runId}/press`);
         const status = response.data.status;
         if (status === "SUCCESS") {
+            handleAchievement(response.data.unlockedAchievementKey);
+            await new Promise(resolve => setTimeout(resolve, 100));
             await handleNextLevel();
         } else if (status === "FAILED") {
             if (!result) {
-                if (soundEnabled) {
-                    void gameOverSound.play();
-                }
+                buttonClickSound.pause();
+                buttonClickSound.currentTime = 0;
+                if (soundEnabled) void gameOverSound.play();
                 setResult("FAILED");
             }
         }
@@ -153,12 +165,9 @@ export function Game() {
     const handleNextLevel = async () => {
         const nextIndex = currentLevelIndex + 1;
 
-
-        // All levels of this difficulty done → show complete screen
         if (nextIndex >= levels.length) {
-            if(soundEnabled) {
-                void difficultySuccessSound.play();
-            }
+            if(soundEnabled) void difficultySuccessSound.play();
+            setCompletionAchievement(unlockedAchievement);
             setRunId(null);
             setTimeLeft(null);
             setResult(null);
@@ -178,10 +187,8 @@ export function Game() {
     };
 
     const handleMouseDown = async () => {
-        if(soundEnabled) {
-            void buttonClickSound.play();
-        }
         if (!runId) return;
+        if(soundEnabled) void buttonClickSound.play();
         await api.post(`/api/runs/${runId}/press`);
     };
 
@@ -190,18 +197,17 @@ export function Game() {
         const response = await api.post(`/api/runs/${runId}/release`);
         const status = response.data.status;
         if (status === "SUCCESS") {
+            handleAchievement(response.data.unlockedAchievementKey);
+            await new Promise(resolve => setTimeout(resolve, 100));
             await handleNextLevel();
         } else if (status === "FAILED") {
             if (!result) {
-                if (soundEnabled) {
-                    void gameOverSound.play();
-                }
+                if (soundEnabled) void gameOverSound.play();
+
                 setResult("FAILED");
             }
         }
     };
-
-    const imageConfig = imagePositionMap[currentLevel.levelId] ?? { position: "corner", size: "small" };
 
     return (
         <main className="game-page">
@@ -224,6 +230,13 @@ export function Game() {
                         />
                     )}
                 </div>
+
+                {unlockedAchievement && (
+                    <AchievementPopup
+                        achievementKey={unlockedAchievement}
+                        onClose={() => setUnlockedAchievement(null)}
+                    />
+                )}
 
                 <div className="center">
                     {!gameStarted && (

@@ -74,5 +74,8 @@
     "message": "Message",
     "write": "Write your feedback here...",
     "submit-button": "Submit feedback"
+  },
+  "popup": {
+    "unlocked": "Achievement unlocked!"
   }
 }
