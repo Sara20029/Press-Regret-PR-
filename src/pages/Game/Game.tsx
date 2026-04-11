@@ -305,7 +305,9 @@ export function Game() {
                                 </div>
 
                                 <h1 className="game-over-title">{t('game.gameOver')}</h1>
-                                <button onClick={handleReset}>{t('game.reset')}</button>
+                                <div className="reset-button">
+                                    <button  onClick={handleReset}>{t('game.reset')}</button>
+                                </div>
                             </div>
                         </section>
                     )}
