@@ -148,8 +148,20 @@ export function Game() {
     if (!difficultyId) return <Navigate to="/game" replace/>;
     if (!levels) return <main style={{padding: 24}}>{t('game.loading')}…</main>;
     if (levels.length === 0) return <main style={{padding: 24}}>{t('game.noLevels')}.</main>;
+
     if (difficultyComplete && difficulty) {
-        return <DifficultyComplete difficulty={difficulty} achievementKey={completionAchievement}/>;
+        return <DifficultyComplete
+            difficulty={difficulty}
+            achievementKey={completionAchievement}
+            onReset={() => {
+                setCurrentLevelIndex(0);
+                setRunId(null);
+                setTimeLeft(null);
+                setResult(null);
+                setGameStarted(false);
+                setDifficultyComplete(false);
+            }}
+        />;
     }
 
 
