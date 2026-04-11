@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import "./AchievementPopup.css";
 
@@ -8,6 +9,13 @@ type Props = {
 
 export function AchievementPopup({ achievementKey, onClose }: Props) {
     const { t } = useTranslation();
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            onClose();
+        }, 3000);
+        return () => clearTimeout(timer);
+    }, [achievementKey, onClose]);
 
     return (
         <div className="achievement-popup" onClick={onClose}>

@@ -56,7 +56,7 @@ export function Game() {
         }
     };
 
-    const handleNextLevel = useCallback(async () => {
+    const handleNextLevel = useCallback(async (achievementKey: string | null = null) => {
         const nextIndex = currentLevelIndex + 1;
 
         if (nextIndex >= levels!.length) {
@@ -65,6 +65,11 @@ export function Game() {
             setRunId(null);
             setTimeLeft(null);
             setResult(null);
+
+            if (achievementKey) {
+                await new Promise(resolve => setTimeout(resolve, 3000));
+            }
+
             setDifficultyComplete(true);
             return;
         }
@@ -96,19 +101,20 @@ export function Game() {
         if (timeLeft === null) return;
 
         if (timeLeft <= 0) {
-            api.post(`api/runs/${runId}/finish`)
-                .then(async r => {
-                    if (r.data.status === "SUCCESS") {
-                        handleAchievement(r.data.unlockedAchievementKey);
-                        await new Promise(resolve => setTimeout(resolve, 100));
-                        await handleNextLevel();
-                    } else {
-                        if (!result) {
-                            if (soundEnabled) void gameOverSound.play();
-                            setResult("FAILED");
-                        }
+            const finish = async () => {
+                const r = await api.post(`api/runs/${runId}/finish`);
+                if (r.data.status === "SUCCESS") {
+                    const key = r.data.unlockedAchievementKey ?? null;
+                    handleAchievement(key);
+                    await handleNextLevel(key);
+                } else {
+                    if (!result) {
+                        if (soundEnabled) void gameOverSound.play();
+                        setResult("FAILED");
                     }
-                });
+                }
+            };
+            void finish();
             return;
         }
 
@@ -184,9 +190,10 @@ export function Game() {
         const response = await api.post(`/api/runs/${runId}/press`);
         const status = response.data.status;
         if (status === "SUCCESS") {
-            handleAchievement(response.data.unlockedAchievementKey);
+            const key = response.data.unlockedAchievementKey ?? null;
+            handleAchievement(key);
             await new Promise(resolve => setTimeout(resolve, 100));
-            await handleNextLevel();
+            await handleNextLevel(key);
         } else if (status === "FAILED") {
             if (!result) {
                 buttonClickSound.pause();
@@ -208,9 +215,10 @@ export function Game() {
         const response = await api.post(`/api/runs/${runId}/release`);
         const status = response.data.status;
         if (status === "SUCCESS") {
-            handleAchievement(response.data.unlockedAchievementKey);
+            const key = response.data.unlockedAchievementKey ?? null;
+            handleAchievement(key);
             await new Promise(resolve => setTimeout(resolve, 100));
-            await handleNextLevel();
+            await handleNextLevel(key);
         } else if (status === "FAILED") {
             if (!result) {
                 if (soundEnabled) void gameOverSound.play();
@@ -225,7 +233,7 @@ export function Game() {
         setTimeLeft(null);
         setResult(null);
         setGameStarted(false);
-    }
+    };
 
     return (
         <main className="game-page">

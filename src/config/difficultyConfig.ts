@@ -12,11 +12,11 @@ export const difficultyConfig = {
     },
     medium: {
         title: "Press & Regret: Medium",
-        timer: 25,
+        timer: 5,
     },
     hard: {
         title: "Press & Regret: Hard",
-        timer: 30,
+        timer: 5,
     },
 };
 
