@@ -10,7 +10,9 @@ export default function About() {
     const { t } = useTranslation();
 
     useEffect(() => {
-        api.get<Content>("/api/content/about").then((r) => setData(r.data));
+        api.get<Content>("/api/content/about")
+            .then((r) => setData(r.data))
+            .catch((err) => console.error("Failed to load about:", err));
     }, []);
 
     if (!data) return <main>{t('game.loading')}…</main>;

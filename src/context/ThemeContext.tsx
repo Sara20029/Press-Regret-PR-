@@ -16,7 +16,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         api.get('/api/settings')
-            .then(r => setTheme(r.data.theme));
+            .then(r => setTheme(r.data.theme))
+            .catch(err => console.error("Failed to load theme settings:", err));
     }, []);
 
     useEffect(() => {
