@@ -7,9 +7,10 @@ import "./DifficultyComplete.css"
 type Props = {
     difficulty: string;
     achievementKey?: string | null;
+    onReset: () => void;
 };
 
-export function DifficultyComplete({ difficulty, achievementKey }: Props) {
+export function DifficultyComplete({ difficulty, achievementKey, onReset }: Props) {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const completeConfig = difficultyCompleteConfig[difficulty];
@@ -37,7 +38,7 @@ export function DifficultyComplete({ difficulty, achievementKey }: Props) {
                             {t('difficultyComplete.backToHome')}
                         </button>
                     )}
-                    <button className="complete-btn complete-btn-secondary" onClick={() => navigate(`/game/${difficulty}`)}>
+                    <button className="complete-btn complete-btn-secondary" onClick={onReset}>
                         {t('game.reset')}
                     </button>
                 </div>

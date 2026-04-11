@@ -16,7 +16,7 @@ export const difficultyConfig = {
     },
     hard: {
         title: "Press & Regret: Hard",
-        timer: 3,
+        timer: 5,
     },
 };
 
