@@ -1,7 +1,7 @@
 import "./Game.css";
-import {useEffect, useState, useCallback} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {Link, Navigate, useParams} from "react-router-dom";
-import {difficultyMap, difficultyConfig} from "../../config/difficultyConfig";
+import {difficultyConfig, difficultyMap} from "../../config/difficultyConfig";
 import {api} from "../../api/http.ts";
 import {DifficultyComplete} from "./DifficultyComplete.tsx";
 import {useTranslation} from "react-i18next";
@@ -24,11 +24,11 @@ type LevelResponse = {
 };
 
 const imagePositionMap: Record<number, { position: "corner" | "center", size: "small" | "large" }> = {
-    11: { position:"corner", size: "small" },
-    14: { position:"corner", size: "small" },
-    12: { position:"center", size: "small" },
-    21: { position:"center", size: "small" },
-    22: { position:"center", size: "large" },
+    11: {position: "corner", size: "small"},
+    14: {position: "corner", size: "small"},
+    12: {position: "center", size: "small"},
+    21: {position: "center", size: "small"},
+    22: {position: "center", size: "large"},
 };
 
 export function Game() {
@@ -61,7 +61,7 @@ export function Game() {
         const nextIndex = currentLevelIndex + 1;
 
         if (nextIndex >= levels!.length) {
-            if(soundEnabled) void difficultySuccessSound.play();
+            if (soundEnabled) void difficultySuccessSound.play();
             setCompletionAchievement(unlockedAchievement);
             setRunId(null);
             setTimeLeft(null);
@@ -148,13 +148,13 @@ export function Game() {
     if (!difficultyId) return <Navigate to="/game" replace/>;
     if (!levels) return <main style={{padding: 24}}>{t('game.loading')}…</main>;
     if (levels.length === 0) return <main style={{padding: 24}}>{t('game.noLevels')}.</main>;
-    if (difficultyComplete && difficulty)  {
+    if (difficultyComplete && difficulty) {
         return <DifficultyComplete difficulty={difficulty} achievementKey={completionAchievement}/>;
     }
 
 
     const currentLevel = levels[currentLevelIndex];
-    const imageConfig = imagePositionMap[currentLevel.levelId] ?? { position: "corner", size: "small" };
+    const imageConfig = imagePositionMap[currentLevel.levelId] ?? {position: "corner", size: "small"};
 
     const handleStart = async () => {
         setGameStarted(true);
@@ -166,7 +166,7 @@ export function Game() {
 
     const handlePress = async () => {
         if (!runId) return;
-        if(soundEnabled) {
+        if (soundEnabled) {
             buttonClickSound.currentTime = 0;
             void buttonClickSound.play();
         }
@@ -188,7 +188,7 @@ export function Game() {
 
     const handleMouseDown = async () => {
         if (!runId) return;
-        if(soundEnabled) void buttonClickSound.play();
+        if (soundEnabled) void buttonClickSound.play();
         await api.post(`/api/runs/${runId}/press`);
     };
 
@@ -208,7 +208,7 @@ export function Game() {
         }
     };
 
-    const handleReset = () =>{
+    const handleReset = () => {
         setCurrentLevelIndex(0);
         setRunId(null);
         setTimeLeft(null);
@@ -275,20 +275,20 @@ export function Game() {
 
                     {result === "FAILED" && (
                         <div>
-                            <p>❌ {t('game.gameOver')}!</p>
                             <button onClick={handleReset}>{t('game.reset')}</button>
-                        <div className="game-over-screen">
-                            <div className="game-over-content">
-                                <div className="game-over-image-container">
-                                    <img
-                                        src="/src/assets/images/game-over-skull.png"
-                                        alt="Game Over"
-                                        className="game-over-image"
-                                        draggable={false}
-                                    />
-                                </div>
+                            <div className="game-over-screen">
+                                <div className="game-over-content">
+                                    <div className="game-over-image-container">
+                                        <img
+                                            src="/src/assets/images/game-over-skull.png"
+                                            alt="Game Over"
+                                            className="game-over-image"
+                                            draggable={false}
+                                        />
+                                    </div>
 
-                                <h1 className="game-over-title">{t('game.gameOver')}</h1>
+                                    <h1 className="game-over-title">{t('game.gameOver')}</h1>
+                                </div>
                             </div>
                         </div>
                     )}
