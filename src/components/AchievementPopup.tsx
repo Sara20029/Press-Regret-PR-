@@ -18,12 +18,12 @@ export function AchievementPopup({ achievementKey, onClose }: Props) {
     }, [achievementKey, onClose]);
 
     return (
-        <div className="achievement-popup" onClick={onClose}>
+        <aside className="achievement-popup" onClick={onClose}>
             <div className="achievement-popup-icon">🏆</div>
             <div className="achievement-popup-content">
                 <p className="achievement-popup-label">{t('popup.unlocked')}</p>
                 <p className="achievement-popup-title">{t(`achievements.${achievementKey}.title`)}</p>
             </div>
-        </div>
+        </aside>
     );
 }

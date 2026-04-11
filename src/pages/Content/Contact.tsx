@@ -32,8 +32,8 @@ export default function Contact() {
                     <p className="contact-desc">{t(data.description)}</p>
                 </div>
 
-                <div className="contact-email-section">
-                    <span className="contact-email-label">{t('contact.emailLabel')}</span>
+                <section className="contact-email-section">
+                    <p className="contact-email-label">{t('contact.emailLabel')}</p>
                     <div className="contact-emails">
                         {emails.map((email: string, index: number) => (
 
@@ -48,7 +48,7 @@ export default function Contact() {
                             </a>
                         ))}
                     </div>
-                </div>
+                </section>
             </div>
         </main>
     )

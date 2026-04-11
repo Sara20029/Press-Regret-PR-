@@ -2,6 +2,7 @@ import "./Achievements.css";
 import {useEffect, useState} from "react";
 import {api} from "../../api/http.ts";
 import { useTranslation } from "react-i18next";
+import * as React from "react";
 
 
 
@@ -72,14 +73,14 @@ export function Achievements() {
                 <div className="progress-bar">
                     <div
                         className="progress-fill"
-                        style={{ width: `${progressPercent}%` }}
+                        style={{ '--progress': `${progressPercent}%` } as React.CSSProperties}
                     ></div>
                 </div>
             </section>
 
             <section className="achievements-list">
                 {achievements.map((achievement) => (
-                    <div
+                    <article
                         key={achievement.id}
                         className={`achievement-card ${achievement.unlocked ? "unlocked" : "locked"}`}
                     >
@@ -90,7 +91,7 @@ export function Achievements() {
                             <h2>{t(`achievements.${achievement.key}.title`)}</h2>
                             <p>{t(`achievements.${achievement.key}.description`)}</p>
                         </div>
-                    </div>
+                    </article>
                 ))}
             </section>
         </main>

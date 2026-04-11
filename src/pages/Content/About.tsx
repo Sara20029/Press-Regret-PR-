@@ -27,11 +27,11 @@ export default function About() {
                 <div className="about-team-section">
                     <h2 className="about-team-label">{t('about.team')}</h2>
                     <div className="about-team">
-                        <div className="about-member">
+                        <article className="about-member">
                             <div className="about-avatar">S</div>
                             <span className="about-member-name">{t('about.Sara')}</span>
                             <span className="about-member-role">{t('about.role')}</span>
-                        </div>
+                        </article>
                         <div className="about-member">
                             <div className="about-avatar">E</div>
                             <span className="about-member-name">{t('about.Emily')}</span>

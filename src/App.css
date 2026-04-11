@@ -21,6 +21,14 @@ body.light {
   --hint-bg: #fffbeb;
   --hint-border: #f59e0b44;
   --hint-text: #92400e;
+
+  --card-border: #d0d0d0;
+  --color-accent: #e05555;
+  --color-success: #22c55e;
+  --color-danger: #ff0000;
+  --input-bg: #f0f0f0;
+  --timer-bg: #d9d9d9;
+  --timer-color: #111111;
 }
 
 body.dark {
@@ -38,6 +46,14 @@ body.dark {
   --hint-bg: #2a1f00;
   --hint-border: #7a520066;
   --hint-text: #fcd34d;
+
+  --card-border: #333333;
+  --color-accent: #e05555;
+  --color-success: #22c55e;
+  --color-danger: #ff4444;
+  --input-bg: #1a1a1a;
+  --timer-bg: #d9d9d9;
+  --timer-color: #111111;
 }
 
 body {

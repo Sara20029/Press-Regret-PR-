@@ -139,9 +139,9 @@ export function Game() {
 
     if (!difficulty) {
         return (
-            <main style={{padding: 24}}>
+            <main className="game-fallback">
                 <h1>{t('home.title')}</h1>
-                <div style={{display: "flex", gap: 12, marginTop: 16}}>
+                <div className="game-fallback-links">
                     <Link to="/game/easy">{t('nav.easy')}</Link>
                     <Link to="/game/medium">{t('nav.medium')}</Link>
                     <Link to="/game/hard">{t('nav.hard')}</Link>
@@ -151,8 +151,8 @@ export function Game() {
     }
 
     if (!difficultyId) return <Navigate to="/game" replace/>;
-    if (!levels) return <main style={{padding: 24}}>{t('game.loading')}…</main>;
-    if (levels.length === 0) return <main style={{padding: 24}}>{t('game.noLevels')}.</main>;
+    if (!levels) return <main className="game-fallback">{t('game.loading')}…</main>;
+    if (levels.length === 0) return <main className="game-fallback">{t('game.noLevels')}.</main>;
 
     if (difficultyComplete && difficulty) {
         return <DifficultyComplete
@@ -242,10 +242,10 @@ export function Game() {
                     <h1>{config.title}</h1>
                 </header>
 
-                <div className="status">
-                    <div className="level">Level {currentLevel.number}</div>
+                <section className="status">
+                    <span className="level">Level {currentLevel.number}</span>
                     <div className="timer">{timeLeft ?? config.timer}</div>
-                </div>
+                </section>
 
                 <div className={`level-visual-corner-${imageConfig.size}`}>
                     {gameStarted && currentLevel.imageUrl && imageConfig.position === "corner" && (
@@ -293,7 +293,7 @@ export function Game() {
                     )}
 
                     {result === "FAILED" && (
-                        <div className="game-over-screen">
+                        <section className="game-over-screen">
                             <div className="game-over-content">
                                 <div className="game-over-image-container">
                                     <img
@@ -305,9 +305,11 @@ export function Game() {
                                 </div>
 
                                 <h1 className="game-over-title">{t('game.gameOver')}</h1>
-                                <button onClick={handleReset}>{t('game.reset')}</button>
+                                <div className="reset-button">
+                                    <button  onClick={handleReset}>{t('game.reset')}</button>
+                                </div>
                             </div>
-                        </div>
+                        </section>
                     )}
                 </div>
             </div>
