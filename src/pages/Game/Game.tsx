@@ -274,21 +274,19 @@ export function Game() {
                     )}
 
                     {result === "FAILED" && (
-                        <div>
-                            <button onClick={handleReset}>{t('game.reset')}</button>
-                            <div className="game-over-screen">
-                                <div className="game-over-content">
-                                    <div className="game-over-image-container">
-                                        <img
-                                            src="/src/assets/images/game-over-skull.png"
-                                            alt="Game Over"
-                                            className="game-over-image"
-                                            draggable={false}
-                                        />
-                                    </div>
-
-                                    <h1 className="game-over-title">{t('game.gameOver')}</h1>
+                        <div className="game-over-screen">
+                            <div className="game-over-content">
+                                <div className="game-over-image-container">
+                                    <img
+                                        src="/src/assets/images/game-over-skull.png"
+                                        alt="Game Over"
+                                        className="game-over-image"
+                                        draggable={false}
+                                    />
                                 </div>
+
+                                <h1 className="game-over-title">{t('game.gameOver')}</h1>
+                                <button onClick={handleReset}>{t('game.reset')}</button>
                             </div>
                         </div>
                     )}
