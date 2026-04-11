@@ -208,6 +208,14 @@ export function Game() {
         }
     };
 
+    const handleReset = () =>{
+        setCurrentLevelIndex(0);
+        setRunId(null);
+        setTimeLeft(null);
+        setResult(null);
+        setGameStarted(false);
+    }
+
     return (
         <main className="game-page">
             <div className="game-box">
@@ -238,9 +246,11 @@ export function Game() {
                 )}
 
                 <div className="center">
-                    {!gameStarted && (
-                        <button onClick={handleStart}>{t('game.start')}</button>
-                    )}
+                    <div className="start-button">
+                        {!gameStarted && (
+                            <button onClick={handleStart}>{t('game.start')}</button>
+                        )}
+                    </div>
 
                     {gameStarted && result === null && (
                         <button
@@ -264,6 +274,9 @@ export function Game() {
                     )}
 
                     {result === "FAILED" && (
+                        <div>
+                            <p>❌ {t('game.gameOver')}!</p>
+                            <button onClick={handleReset}>{t('game.reset')}</button>
                         <div className="game-over-screen">
                             <div className="game-over-content">
                                 <div className="game-over-image-container">

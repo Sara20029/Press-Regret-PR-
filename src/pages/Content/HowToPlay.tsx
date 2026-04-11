@@ -17,10 +17,7 @@ export default function HowToPlay() {
 
     useEffect(() => {
         api.get<Content>("/api/content/how-to-play")
-            .then((r) => {
-                console.log("Response:", r.data);
-                setData(r.data);
-            })
+            .then((r) => setData(r.data))
             .catch((err) => console.error("API Fehler:", err));
     }, []);
 
@@ -30,15 +27,21 @@ export default function HowToPlay() {
 
     return (
         <main className="howToPlay-page">
-            <h1>{data.title}</h1>
-            <p>{data.description}</p>
-            <ul style={{ marginTop: 16 }}>
-                {data.instructions.map((instruction, index) => (
-                    <li key={index} style={{ marginTop: 8 }}>
-                        {instruction}
-                    </li>
-                ))}
-            </ul>
+            <div className="howToPlay-box">
+                <div className="howToPlay-header">
+                    <span className="howToPlay-icon">🎮</span>
+                    <h1 className="howToPlay-title">{t(data.title)}</h1>
+                    <p className="howToPlay-desc">{t(data.description)}</p>
+                </div>
+                <ol className="howToPlay-list">
+                    {data.instructions.map((key, index) => (
+                        <li key={index} className="howToPlay-item">
+                            <span className="howToPlay-number">{index + 1}</span>
+                            <span>{t(key)}</span>
+                        </li>
+                    ))}
+                </ol>
+            </div>
         </main>
     );
 }
