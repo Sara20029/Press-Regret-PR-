@@ -102,7 +102,7 @@ export function Game() {
 
         if (timeLeft <= 0) {
             const finish = async () => {
-                const r = await api.post(`api/runs/${runId}/finish`);
+                const r = await api.post(`/api/runs/${runId}/finish`);
                 if (r.data.status === "SUCCESS") {
                     const key = r.data.unlockedAchievementKey ?? null;
                     handleAchievement(key);
