@@ -1,35 +1,36 @@
 .feedback-page {
-    min-height: 100vh;
+    min-height: 85vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: transparent;
-    padding: 24px;
+    padding: 3rem 2rem;
     box-sizing: border-box;
 }
 
 .feedback-card {
     width: 100%;
     max-width: 600px;
-    background-color: #b8c3cf;
-    padding: 32px;
+    background-color: #111;
+    border: 2px solid #333;
+    padding: 3rem 3.5rem;
     border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    color: white;
 }
 
 .feedback-card h1 {
     margin-top: 0;
     margin-bottom: 12px;
-    font-size: 2rem;
-    color: #222;
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: white;
     text-align: center;
 }
 
 .feedback-intro {
     margin-bottom: 24px;
     text-align: center;
-    color: #555;
-    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.6;
 }
 
 .feedback-form {
@@ -46,25 +47,37 @@
 
 .form-group label {
     font-weight: 600;
-    color: #333;
+    color: rgba(255, 255, 255, 0.85);
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
     padding: 12px;
-    border: 1px solid #cfcfcf;
+    border: 1px solid #444;
     border-radius: 10px;
     font-size: 1rem;
     font-family: inherit;
     box-sizing: border-box;
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.form-group select option {
+    background-color: #1a1a1a;
+    color: white;
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #4f46e5;
+    border-color: #e05555;
 }
 
 .form-group textarea {
@@ -73,27 +86,33 @@
 }
 
 .submit-button {
-    padding: 14px;
+    padding: 1rem;
     border: none;
-    border-radius: 10px;
-    background-color: #4f46e5;
-    color: white;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(210, 225, 255, 0.88));
+    color: #1a1a2e;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 800;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
 .submit-button:hover {
-    background-color: #4338ca;
+    transform: translateY(-2px);
+    opacity: 0.88;
+}
+
+.submit-button:active {
+    transform: scale(0.97);
 }
 
 .success-message {
     margin-bottom: 20px;
     padding: 12px;
     border-radius: 10px;
-    background-color: #dcfce7;
-    color: #166534;
+    background-color: #1a3a1a;
+    border: 1px solid #2d6a2d;
+    color: #a8e6a8;
     text-align: center;
     font-weight: 600;
 }
