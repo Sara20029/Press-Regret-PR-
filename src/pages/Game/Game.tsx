@@ -48,12 +48,12 @@ export function Game() {
     const {t} = useTranslation();
     const {soundEnabled} = useSound();
 
-    const handleAchievement = (key: string | null) => {
+    const handleAchievement = useCallback((key: string | null) => {
         if (key) {
             setUnlockedAchievement(key);
             setTimeout(() => setUnlockedAchievement(null), 3000);
         }
-    };
+    }, []);
 
     const handleNextLevel = useCallback(async (achievementKey: string | null = null) => {
         const nextIndex = currentLevelIndex + 1;
