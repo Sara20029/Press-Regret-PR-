@@ -10,8 +10,8 @@
 }
 .game-box {
     background-color: var(--card-color);
-    width: 900px;
-    height: 700px;
+    width: min(900px, 95vw);
+    height: min(700px, 90vh);
     border-radius: 16px;
     border: 2px solid var(--card-border);
     display: flex;
@@ -63,8 +63,8 @@
 }
 
 .circle-button {
-    width: 420px;
-    height: 420px;
+    width: min(420px, 50vw);
+    height: min(420px, 50vw);
     border-radius: 50%;
     background-color: #00a000;
     border: none;
@@ -231,4 +231,21 @@
     display: flex;
     gap: 12px;
     margin-top: 16px;
+}
+
+@media (max-width: 960px) {
+    .game-box {
+        width: 95vw;
+        height: auto;
+        min-height: 600px;
+    }
+
+    .circle-button {
+        width: 60vw;
+        height: 60vw;
+    }
+
+    .complete-screen {
+        width: 95vw;
+    }
 }

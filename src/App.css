@@ -89,7 +89,7 @@ body {
   justify-content: center;
   align-items: center;
   gap: 4px;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   max-width: 1200px;
 }
 

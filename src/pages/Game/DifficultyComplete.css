@@ -1,6 +1,6 @@
 .complete-screen {
     background-color: var(--card-color);
-    width: 900px;
+    width: min(900px, 95vw);
     border-radius: 16px;
     border: 2px solid var(--card-border);
     display: flex;
