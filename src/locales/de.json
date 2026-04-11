@@ -12,7 +12,13 @@
     "setting": "Einstellungen"
   },
   "home": {
-    "title": "Wähle eine Schwierigkeit"
+    "title": "Wähle eine Schwierigkeit",
+    "welcome": "Teste deine Reaktion und Konzentration",
+    "hint": "Die Schwierigkeitsstufen bauen aufeinander auf. Wir empfehlen mit der Schwierigkeit <1>Einfach</1> zu starten.",
+    "recommended": "Empfohlen",
+    "easyDesc": "Perfekt zum Einstieg. Lerne die Mechaniken kennen.",
+    "mediumDesc": "Für Fortgeschrittene. Schnellere Reaktionen gefragt.",
+    "hardDesc": "Maximale Herausforderung. Nur für Profis."
   },
   "game": {
     "loading": "Lade",
@@ -58,7 +64,21 @@
     "save": "Einstellungen Speichern"
   },
   "difficultyComplete": {
-    "backToHome": "Zurück zur Startseite"
+    "backToHome": "Zurück zur Startseite",
+    "easy": {
+      "title": "Easy gemeistert!",
+      "subtitle": "Du hast alle Easy-Level geschafft. Bereit für mehr?",
+      "nextLabel": "Weiter zu Medium"
+    },
+    "medium": {
+      "title": "Medium gemeistert!",
+      "subtitle": "Nicht schlecht! Jetzt wird's richtig ernst.",
+      "nextLabel": "Weiter zu Hard"
+    },
+    "hard": {
+      "title": "Spiel geschafft!",
+      "subtitle": "Unglaublich – du hast alle Level gemeistert. Respekt!"
+    }
   },
   "feedback": {
     "intro": "Teile uns mit, wie dir das Spiel gefällt oder was wir verbessern können",
@@ -77,5 +97,33 @@
   },
   "popup": {
     "unlocked": "Errungenschaft freigeschaltet!"
+  },
+  "howToPlay": {
+    "title": "Wie spielt man",
+    "description": "Lerne die Regeln und meistere jede Schwierigkeit.",
+    "instructions": {
+      "0": "Drücke den Button im richtigen Moment!",
+      "1": "Bleib ruhig und lass dich nicht ärgern!",
+      "2": "Lies die Beschreibung auf dem Button genau!",
+      "3": "Tu, was der Button sagt.",
+      "4": "Wenn du nicht tust, was der Button sagt, verlierst du.",
+      "5": "Jedes Level wird schwieriger.",
+      "6": "Die Schwierigkeiten und Level hängen zusammen.",
+      "7": "Vielleicht brauchst du etwas aus den anderen Leveln.",
+      "8": "Es empfiehlt sich, mit der Schwierigkeit Einfach zu starten."
+    }
+  },
+  "about": {
+    "title": "Über das Spiel",
+    "description": "Wir sind Sara und Emily, Studentinnen an der HWR Berlin im 4.Semester. Dies ist unser Spiel 'Press & Regret', inspiriert von einem anderen Spiel, das unsere Nerven auf die Probe gestellt hat. 'Press & Regret' testet deine Reflexe und deine Geduld. Viel Spaß! Wenn du Verbesserungsvorschläge hast, schreib uns gerne im kontaktbereich. ",
+    "team": "Das Team",
+    "Sara": "Sara",
+    "Emily": "Emily",
+    "role": "Entwicklerin | HWR Berlin | 4. Semester"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "description": "Hast du etwas gefunden, das wir verbessern könnten? Oder möchtest du uns Feedback geben? Schreib uns einfach eine E-Mail!",
+    "emailLabel": "Erreichbar unter"
   }
 }

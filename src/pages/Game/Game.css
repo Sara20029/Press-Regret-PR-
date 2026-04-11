@@ -131,3 +131,25 @@
     height: 100%;
     object-fit: contain;
 }
+
+.start-button button {
+    padding: 1.2rem 5rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(220, 230, 255, 0.85));
+    color: #1a1a2e;
+    letter-spacing: 0.03em;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.start-button button:hover {
+    transform: translateY(-2px);
+    opacity: 0.88;
+}
+
+.start-button button:active {
+    transform: scale(0.97);
+}
