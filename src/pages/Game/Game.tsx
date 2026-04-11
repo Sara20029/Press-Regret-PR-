@@ -247,9 +247,11 @@ export function Game() {
                 )}
 
                 <div className="center">
-                    {!gameStarted && (
-                        <button onClick={handleStart}>{t('game.start')}</button>
-                    )}
+                    <div className="start-button">
+                        {!gameStarted && (
+                            <button onClick={handleStart}>{t('game.start')}</button>
+                        )}
+                    </div>
 
                     {gameStarted && result === null && (
                         <button
