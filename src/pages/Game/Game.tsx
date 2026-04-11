@@ -27,7 +27,6 @@ const imagePositionMap: Record<number, { position: "corner" | "center", size: "s
     11: {position: "corner", size: "small"},
     14: {position: "corner", size: "small"},
     12: {position: "center", size: "small"},
-    21: {position: "center", size: "small"},
     22: {position: "center", size: "large"},
 };
 
