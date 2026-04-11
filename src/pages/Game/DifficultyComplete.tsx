@@ -21,7 +21,7 @@ export function DifficultyComplete({ difficulty, achievementKey, onReset }: Prop
             {achievementKey && (
                 <AchievementPopup achievementKey={achievementKey} onClose={() => {}}/>
             )}
-            <div className="complete-screen">
+            <section className="complete-screen">
                 <div className="complete-emoji">{completeConfig.emoji}</div>
                 <h1 className="complete-title">{t(completeConfig.titleKey)}</h1>
                 <p className="complete-subtitle">{t(completeConfig.subtitleKey)}</p>
@@ -42,7 +42,7 @@ export function DifficultyComplete({ difficulty, achievementKey, onReset }: Prop
                         {t('game.reset')}
                     </button>
                 </div>
-            </div>
+            </section>
         </main>
     );
 }

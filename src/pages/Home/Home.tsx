@@ -19,14 +19,14 @@ export default function Home() {
                 <p className="home-sub">{t('home.welcome')}</p>
             </div>
 
-            <div className="home-hint">
+            <aside className="home-hint">
                 <span className="home-hint-icon">💡</span>
                 <span className="home-hint-text">
                     <Trans i18nKey="home.hint" components={[<span/>, <strong/>]} />
                 </span>
-            </div>
+            </aside>
 
-            <div className="home-cards">
+            <section className="home-cards">
                 <Link to="/game/easy" className="home-card home-card-easy">
                     <span className="home-card-badge">{t('home.recommended')}</span>
                     <span className="home-card-icon">🟢</span>
@@ -43,7 +43,7 @@ export default function Home() {
                     <span className="home-card-title">{t('nav.hard')}</span>
                     <span className="home-card-desc">{t('home.hardDesc')}</span>
                 </Link>
-            </div>
+            </section>
         </main>
     );
 }

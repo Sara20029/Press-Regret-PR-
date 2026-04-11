@@ -242,10 +242,10 @@ export function Game() {
                     <h1>{config.title}</h1>
                 </header>
 
-                <div className="status">
-                    <div className="level">Level {currentLevel.number}</div>
+                <section className="status">
+                    <span className="level">Level {currentLevel.number}</span>
                     <div className="timer">{timeLeft ?? config.timer}</div>
-                </div>
+                </section>
 
                 <div className={`level-visual-corner-${imageConfig.size}`}>
                     {gameStarted && currentLevel.imageUrl && imageConfig.position === "corner" && (
@@ -293,7 +293,7 @@ export function Game() {
                     )}
 
                     {result === "FAILED" && (
-                        <div className="game-over-screen">
+                        <section className="game-over-screen">
                             <div className="game-over-content">
                                 <div className="game-over-image-container">
                                     <img
@@ -307,7 +307,7 @@ export function Game() {
                                 <h1 className="game-over-title">{t('game.gameOver')}</h1>
                                 <button onClick={handleReset}>{t('game.reset')}</button>
                             </div>
-                        </div>
+                        </section>
                     )}
                 </div>
             </div>
