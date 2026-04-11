@@ -251,7 +251,7 @@ export function Game() {
                     {gameStarted && currentLevel.imageUrl && imageConfig.position === "corner" && (
                         <img
                             src={`/src/assets/images/${currentLevel.imageUrl}`}
-                            alt=""
+                            alt={currentLevel.imageUrl?.replace('.png', '') ?? ''}
                             draggable={false}
                         />
                     )}
@@ -284,7 +284,7 @@ export function Game() {
                                 <div className={`level-visual-center-${imageConfig.size}`}>
                                     <img
                                         src={`/src/assets/images/${currentLevel.imageUrl}`}
-                                        alt=""
+                                        alt={currentLevel.imageUrl?.replace('.png', '') ?? ''}
                                         draggable={false}
                                     />
                                 </div>
