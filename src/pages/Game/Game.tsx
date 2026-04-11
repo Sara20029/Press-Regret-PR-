@@ -1,5 +1,5 @@
 import "./Game.css";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useCallback} from "react";
 import {Link, Navigate, useParams} from "react-router-dom";
 import {difficultyMap, difficultyConfig} from "../../config/difficultyConfig";
 import {api} from "../../api/http.ts";
@@ -45,6 +45,7 @@ export function Game() {
     const [difficultyComplete, setDifficultyComplete] = useState(false);
     const [unlockedAchievement, setUnlockedAchievement] = useState<string | null>(null);
     const [completionAchievement, setCompletionAchievement] = useState<string | null>(null);
+    const [prevDifficulty, setPrevDifficulty] = useState(difficulty);
 
     const {t} = useTranslation();
     const {soundEnabled} = useSound();
@@ -56,15 +57,37 @@ export function Game() {
         }
     };
 
+    const handleNextLevel = useCallback(async () => {
+        const nextIndex = currentLevelIndex + 1;
+
+        if (nextIndex >= levels!.length) {
+            if(soundEnabled) void difficultySuccessSound.play();
+            setCompletionAchievement(unlockedAchievement);
+            setRunId(null);
+            setTimeLeft(null);
+            setResult(null);
+            setDifficultyComplete(true);
+            return;
+        }
+
+        setCurrentLevelIndex(nextIndex);
+        setRunId(null);
+        setTimeLeft(null);
+        setResult(null);
+
+        const nextLevel = levels![nextIndex];
+        const response = await api.post('/api/runs', {levelId: nextLevel.levelId});
+        setRunId(response.data.runId);
+        setTimeLeft(config.timer);
+    }, [currentLevelIndex, levels, soundEnabled, unlockedAchievement, config.timer]);
+
 
     useEffect(() => {
         if (!difficultyId) return;
-        setLevels(null);
-        setDifficultyComplete(false);
         api.get<LevelResponse[]>(`/api/difficulties/${difficultyId}/levels`)
             .then((r) => {
-                console.log(r.data);
                 setLevels(r.data);
+                setDifficultyComplete(false);
             })
             .catch((err) => console.error(err));
     }, [difficultyId]);
@@ -95,17 +118,18 @@ export function Game() {
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [timeLeft]);
+    }, [timeLeft, runId, result, soundEnabled, handleNextLevel]);
 
 
-    useEffect(() => {
+    if (prevDifficulty !== difficulty) {
+        setPrevDifficulty(difficulty);
         setGameStarted(false);
         setCurrentLevelIndex(0);
         setRunId(null);
         setTimeLeft(null);
         setResult(null);
         setDifficultyComplete(false);
-    }, [difficulty]);
+    }
 
 
     if (!difficulty) {
@@ -162,30 +186,6 @@ export function Game() {
         }
     };
 
-    const handleNextLevel = async () => {
-        const nextIndex = currentLevelIndex + 1;
-
-        if (nextIndex >= levels.length) {
-            if(soundEnabled) void difficultySuccessSound.play();
-            setCompletionAchievement(unlockedAchievement);
-            setRunId(null);
-            setTimeLeft(null);
-            setResult(null);
-            setDifficultyComplete(true);
-            return;
-        }
-
-        setCurrentLevelIndex(nextIndex);
-        setRunId(null);
-        setTimeLeft(null);
-        setResult(null);
-
-        const nextLevel = levels[nextIndex];
-        const response = await api.post('/api/runs', {levelId: nextLevel.levelId});
-        setRunId(response.data.runId);
-        setTimeLeft(config.timer);
-    };
-
     const handleMouseDown = async () => {
         if (!runId) return;
         if(soundEnabled) void buttonClickSound.play();
@@ -203,7 +203,6 @@ export function Game() {
         } else if (status === "FAILED") {
             if (!result) {
                 if (soundEnabled) void gameOverSound.play();
-
                 setResult("FAILED");
             }
         }
