@@ -16,7 +16,8 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         api.get('/api/settings')
-            .then(r => setSoundEnabled(r.data.soundEnabled));
+            .then(r => setSoundEnabled(r.data.soundEnabled))
+            .catch(err => console.error("Failed to load sound settings:", err));
     }, []);
 
     return (

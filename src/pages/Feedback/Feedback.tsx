@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./Feedback.css";
 import {api} from "../../api/http.ts";
-import * as React from "react";
 import { useTranslation } from "react-i18next";
+import React from "react";
 
 
 
@@ -13,7 +13,7 @@ export default function Feedback() {
     const [submitted, setSubmitted] = useState(false);
     const { t } = useTranslation();
 
-    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
         e.preventDefault();
 
         await api.post('/api/feedback', {

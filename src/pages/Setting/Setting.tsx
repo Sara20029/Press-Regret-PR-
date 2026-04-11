@@ -18,12 +18,14 @@ export function Setting() {
     const { t } = useTranslation();
 
     useEffect(() => {
-        api.get('/api/settings').then(r => {
+        api.get('/api/settings')
+            .then(r => {
                 setThemeMode(r.data.theme);
                 setLanguage(r.data.language);
                 setSoundEnabled(r.data.soundEnabled);
                 void i18n.changeLanguage(r.data.language);
-            });
+            })
+            .catch(err => console.error("Failed to load settings:", err));
     }, []);
 
     async function handleSave() {

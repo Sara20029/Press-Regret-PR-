@@ -1,5 +1,5 @@
 import "./Game.css";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import {Link, Navigate, useParams} from "react-router-dom";
 import {difficultyConfig, difficultyMap} from "../../config/difficultyConfig";
 import {api} from "../../api/http.ts";
@@ -7,11 +7,6 @@ import {DifficultyComplete} from "./DifficultyComplete.tsx";
 import {useTranslation} from "react-i18next";
 import {useSound} from "../../context/SoundContext.tsx";
 import {AchievementPopup} from "../../components/AchievementPopup.tsx";
-
-
-const buttonClickSound = new Audio('/src/assets/sounds/buttonClick.mp3');
-const difficultySuccessSound = new Audio('/src/assets/sounds/difficultySuccess.mp3');
-const gameOverSound = new Audio('/src/assets/sounds/gameOver.wav');
 
 
 type LevelResponse = {
@@ -46,21 +41,25 @@ export function Game() {
     const [completionAchievement, setCompletionAchievement] = useState<string | null>(null);
     const [prevDifficulty, setPrevDifficulty] = useState(difficulty);
 
+    const buttonClickSound = useRef(new Audio('/src/assets/sounds/buttonClick.mp3'));
+    const difficultySuccessSound = useRef(new Audio('/src/assets/sounds/difficultySuccess.mp3'));
+    const gameOverSound = useRef(new Audio('/src/assets/sounds/gameOver.wav'));
+
     const {t} = useTranslation();
     const {soundEnabled} = useSound();
 
-    const handleAchievement = (key: string | null) => {
+    const handleAchievement = useCallback((key: string | null) => {
         if (key) {
             setUnlockedAchievement(key);
             setTimeout(() => setUnlockedAchievement(null), 3000);
         }
-    };
+    }, []);
 
     const handleNextLevel = useCallback(async (achievementKey: string | null = null) => {
         const nextIndex = currentLevelIndex + 1;
 
         if (nextIndex >= levels!.length) {
-            if (soundEnabled) void difficultySuccessSound.play();
+            if (soundEnabled) void difficultySuccessSound.current.play();
             setCompletionAchievement(unlockedAchievement);
             setRunId(null);
             setTimeLeft(null);
@@ -109,7 +108,7 @@ export function Game() {
                     await handleNextLevel(key);
                 } else {
                     if (!result) {
-                        if (soundEnabled) void gameOverSound.play();
+                        if (soundEnabled) void gameOverSound.current.play();
                         setResult("FAILED");
                     }
                 }
@@ -184,8 +183,8 @@ export function Game() {
     const handlePress = async () => {
         if (!runId) return;
         if (soundEnabled) {
-            buttonClickSound.currentTime = 0;
-            void buttonClickSound.play();
+            buttonClickSound.current.currentTime = 0;
+            void buttonClickSound.current.play();
         }
         const response = await api.post(`/api/runs/${runId}/press`);
         const status = response.data.status;
@@ -196,9 +195,9 @@ export function Game() {
             await handleNextLevel(key);
         } else if (status === "FAILED") {
             if (!result) {
-                buttonClickSound.pause();
-                buttonClickSound.currentTime = 0;
-                if (soundEnabled) void gameOverSound.play();
+                buttonClickSound.current.pause();
+                buttonClickSound.current.currentTime = 0;
+                if (soundEnabled) void gameOverSound.current.play();
                 setResult("FAILED");
             }
         }
@@ -206,7 +205,7 @@ export function Game() {
 
     const handleMouseDown = async () => {
         if (!runId) return;
-        if (soundEnabled) void buttonClickSound.play();
+        if (soundEnabled) void buttonClickSound.current.play();
         await api.post(`/api/runs/${runId}/press`);
     };
 
@@ -221,7 +220,7 @@ export function Game() {
             await handleNextLevel(key);
         } else if (status === "FAILED") {
             if (!result) {
-                if (soundEnabled) void gameOverSound.play();
+                if (soundEnabled) void gameOverSound.current.play();
                 setResult("FAILED");
             }
         }
