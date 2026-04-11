@@ -139,9 +139,9 @@ export function Game() {
 
     if (!difficulty) {
         return (
-            <main style={{padding: 24}}>
+            <main className="game-fallback">
                 <h1>{t('home.title')}</h1>
-                <div style={{display: "flex", gap: 12, marginTop: 16}}>
+                <div className="game-fallback-links">
                     <Link to="/game/easy">{t('nav.easy')}</Link>
                     <Link to="/game/medium">{t('nav.medium')}</Link>
                     <Link to="/game/hard">{t('nav.hard')}</Link>
@@ -151,8 +151,8 @@ export function Game() {
     }
 
     if (!difficultyId) return <Navigate to="/game" replace/>;
-    if (!levels) return <main style={{padding: 24}}>{t('game.loading')}…</main>;
-    if (levels.length === 0) return <main style={{padding: 24}}>{t('game.noLevels')}.</main>;
+    if (!levels) return <main className="game-fallback">{t('game.loading')}…</main>;
+    if (levels.length === 0) return <main className="game-fallback">{t('game.noLevels')}.</main>;
 
     if (difficultyComplete && difficulty) {
         return <DifficultyComplete

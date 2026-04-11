@@ -200,3 +200,13 @@
     margin: 0;
     letter-spacing: 2px;
 }
+
+.game-fallback {
+    padding: 24px;
+}
+
+.game-fallback-links {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
