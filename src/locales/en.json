@@ -12,7 +12,13 @@
     "setting": "Setting"
   },
   "home": {
-    "title": "Choose a difficulty"
+    "title": "Choose a difficulty",
+    "welcome": "Test your reaction and focus",
+    "hint": "Difficulty levels build on each other. We recommend starting with difficulty <1>Easy</1>.",
+    "recommended": "Recommended",
+    "easyDesc": "Perfect for beginners. Learn the mechanics.",
+    "mediumDesc": "For advanced players. Faster reactions required.",
+    "hardDesc": "Maximum challenge. Pros only"
   },
   "game": {
     "loading": "Loading",
@@ -56,7 +62,6 @@
     "en": "English",
     "saved": "Settings saved",
     "save": "Save settings"
-
   },
   "difficultyComplete": {
     "backToHome": "Back to Home",
@@ -92,5 +97,33 @@
   },
   "popup": {
     "unlocked": "Achievement unlocked!"
+  },
+  "howToPlay": {
+    "title": "How To Play",
+    "description": "Learn the rules and master every difficulty.",
+    "instructions": {
+      "0": "Press the button in the right moment!",
+      "1": "Do not get angry!",
+      "2": "Read the description on the button!",
+      "3": "Do what the button says.",
+      "4": "If you do not do what the button says, you lose.",
+      "5": "Every level will get harder.",
+      "6": "The difficulties and levels are connected.",
+      "7": "Maybe you will need something from the other levels.",
+      "8": "It's advisable to start with difficulty Easy."
+    }
+  },
+  "about": {
+    "title": "About the Game",
+    "description": "We are Sara and Emily! We are students at the HWR in Berlin in the 4th semester. This is our game 'Press and Regret' inspired by another game that put our nerves to the test. 'Press and Regret' will challenge your reflexes and your patience. Enjoy the game! If you have any feedback, feel free to reach out in the contact section.",
+    "team": "The Team",
+    "Sara": "Sara",
+    "Emily": "Emily",
+    "role": "Developer | HWR Berlin | 4th Semester"
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "Found something we could do better? Or want to give us feedback? Just send us an email!",
+    "emailLabel": "Reach us at"
   }
 }
