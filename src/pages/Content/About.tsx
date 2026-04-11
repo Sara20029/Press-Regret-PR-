@@ -3,9 +3,6 @@ import { api } from "../../api/http.ts";
 import "./About.css";
 import { useTranslation } from 'react-i18next';
 
-
-
-
 type Content = { title: string; description: string };
 
 export default function About() {
@@ -20,8 +17,29 @@ export default function About() {
 
     return (
         <main className="about-page">
-            <h1>{data.title}</h1>
-            <p>{data.description}</p>
+            <div className="about-box">
+                <div className="about-header">
+                    <span className="about-icon">🎮</span>
+                    <h1 className="about-title">{t(data.title)}</h1>
+                    <p className="about-desc">{t(data.description)}</p>
+                </div>
+
+                <div className="about-team-section">
+                    <h2 className="about-team-label">{t('about.team')}</h2>
+                    <div className="about-team">
+                        <div className="about-member">
+                            <div className="about-avatar">S</div>
+                            <span className="about-member-name">{t('about.Sara')}</span>
+                            <span className="about-member-role">{t('about.role')}</span>
+                        </div>
+                        <div className="about-member">
+                            <div className="about-avatar">E</div>
+                            <span className="about-member-name">{t('about.Emily')}</span>
+                            <span className="about-member-role">{t('about.role')}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     );
 }
