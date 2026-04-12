@@ -30,6 +30,9 @@ cd Press-Regret-PR-
 # Abhängigkeiten installieren
 npm install
 
+# falls npm install nicht sofort funktioniert, zuerst folgendes ausführen und danach npm install erneut
+npm install -D vite@^7.0.0
+
 # Entwicklungsserver starten
 npm run dev
 ```
