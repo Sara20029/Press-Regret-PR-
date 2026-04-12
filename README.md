@@ -24,8 +24,8 @@ Single Page Application für das Spiel "Press & Regret", entwickelt mit React un
 
 ```bash
 # Repository klonen
-git clone 
-cd press-regret-frontend
+git clone https://github.com/Sara20029/Press-Regret-PR-
+cd Press-Regret-PR-
 
 # Abhängigkeiten installieren
 npm install
