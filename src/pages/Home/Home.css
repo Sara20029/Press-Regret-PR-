@@ -1,3 +1,4 @@
+/* Home-page design */
 .home-page {
     min-height: 85vh;
     display: flex;
@@ -117,6 +118,7 @@
     margin-bottom: 4px;
 }
 
+/* Level fields design */
 .home-card-easy {
     background: #1a3a1a;
     border-color: #2d6a2d;
