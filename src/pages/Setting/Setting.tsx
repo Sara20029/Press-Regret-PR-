@@ -6,17 +6,23 @@ import {useSound} from "../../context/SoundContext.tsx";
 import { useTranslation } from "react-i18next";
 import i18n from '../../i18n.ts';
 
-
+/**
+ * Settings page allowing the player to configure theme, language and sound
+ * Load current settings from the backend on mount and saves changes on submit
+ */
 export function Setting() {
-    const [theme, setThemeMode] = useState("light");
+    // Local state mirrors the backend settings before saving
+    const [theme, setThemeMode] = useState("dark");
     const [language, setLanguage] = useState("en");
     const [soundEnabled, setSoundEnabled] = useState(true);
     const [saved, setSaved] = useState(false);
 
+    // Global context setters to apply changes app-wide immediately on save
     const { setTheme: setGlobalTheme } = useTheme();
     const { setSoundEnabled: setGlobalSound } = useSound();
     const { t } = useTranslation();
 
+    // Fetches current settings from the backend and initializes local state
     useEffect(() => {
         api.get('/api/settings')
             .then(r => {
@@ -28,6 +34,10 @@ export function Setting() {
             .catch(err => console.error("Failed to load settings:", err));
     }, []);
 
+    /**
+     * Saves the current settings to the backend and updates global app state.
+     * Also changes the active i18n language immediately.
+     */
     async function handleSave() {
         await api.put('/api/settings', { theme, language, soundEnabled });
         setGlobalTheme(theme);
@@ -81,6 +91,7 @@ export function Setting() {
                     </div>
                 </div>
 
+                {/* Success message shown after saving*/}
                 {saved && <p>✅ {t('settings.saved')}</p>}
 
                 <button className="save-button" onClick={ handleSave }>

@@ -5,7 +5,10 @@ import { useTranslation } from "react-i18next";
 import React from "react";
 
 
-
+/**
+ * Feedback page allowing player to rate and comment on the game.
+ * Submits the feedback to the backend and shows a confirmation on success
+ */
 export default function Feedback() {
     const [name, setName] = useState("");
     const [message, setMessage] = useState("");
@@ -13,6 +16,10 @@ export default function Feedback() {
     const [submitted, setSubmitted] = useState(false);
     const { t } = useTranslation();
 
+    /**
+     * Submits the feedback form to the backend
+     * Resets the form fields and shows a success message on completion
+     */
     async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
         e.preventDefault();
 
@@ -34,6 +41,7 @@ export default function Feedback() {
                 <h1>Feedback</h1>
                 <p className="feedback-intro">{t('feedback.intro')}.</p>
 
+                {/*Success message shown after successful submission*/}
                 {submitted && (
                     <div className="success-message">
                         {t('feedback.success-message')}!
@@ -53,6 +61,7 @@ export default function Feedback() {
                         />
                     </div>
 
+                    {/*Rating from 1 (bad) to 5 (very good)*/}
                     <div className="form-group">
                         <label htmlFor="rating">{t('feedback.rating')}</label>
                         <select

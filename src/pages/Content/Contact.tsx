@@ -3,12 +3,17 @@ import {api} from "../../api/http.ts";
 import "./Contact.css";
 import {useTranslation} from 'react-i18next';
 
+// Shape of the contact returned by the backend
 type Content = {
     title: string;
     description: string;
     email: string;
 };
 
+/**
+ * Contact page showing team email adresses fetched from the backend
+ * Splits the comma-separated email string into individual clickable cards
+ */
 export default function Contact() {
     const [data, setData] = useState<Content | null>(null);
     const {t} = useTranslation();
@@ -34,6 +39,7 @@ export default function Contact() {
 
                 <section className="contact-email-section">
                     <p className="contact-email-label">{t('contact.emailLabel')}</p>
+                    {/* Each email renders as a clickable mailto card*/}
                     <div className="contact-emails">
                         {emails.map((email: string, index: number) => (
 
@@ -42,7 +48,7 @@ export default function Contact() {
                                 className="contact-email-card"
                             >
                             <span className="contact-email-avatar">
-                        {email[0].toUpperCase()}
+                                {email[0].toUpperCase()}
                             </span>
                                 <span className="contact-email-address">{email}</span>
                             </a>
