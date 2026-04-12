@@ -3,8 +3,13 @@ import { api } from "../../api/http.ts";
 import "./About.css";
 import { useTranslation } from 'react-i18next';
 
+// Shape of the content content returned by the backend
 type Content = { title: string; description: string };
 
+/**
+ * About page displaying information about the game and the development team
+ * Content is fetched from the backend and translated via i18n keys
+ */
 export default function About() {
     const [data, setData] = useState<Content | null>(null);
     const { t } = useTranslation();
@@ -26,6 +31,7 @@ export default function About() {
                     <p className="about-desc">{t(data.description)}</p>
                 </div>
 
+                {/*Team section with one card per developer*/}
                 <div className="about-team-section">
                     <h2 className="about-team-label">{t('about.team')}</h2>
                     <div className="about-team">

@@ -9,6 +9,7 @@ import {useSound} from "../../context/SoundContext.tsx";
 import {AchievementPopup} from "../../components/AchievementPopup.tsx";
 
 
+// Shape of a level returned by the backend
 type LevelResponse = {
     levelId: number;
     difficulty: number;
@@ -18,6 +19,7 @@ type LevelResponse = {
     imageUrl: string | null;
 };
 
+// Maps specific level IDs to their image display position and size
 const imagePositionMap: Record<number, { position: "corner" | "center", size: "small" | "large" }> = {
     11: {position: "corner", size: "small"},
     14: {position: "corner", size: "small"},
@@ -25,11 +27,16 @@ const imagePositionMap: Record<number, { position: "corner" | "center", size: "s
     22: {position: "center", size: "large"},
 };
 
+/**
+ * Main game component managing the full game loop
+ * Fetches levels from the backend, handles timer countdown, button interactions and level progression.
+ */
 export function Game() {
     const {difficulty} = useParams();
     const config = difficultyConfig[difficulty as keyof typeof difficultyConfig];
     const difficultyId = difficulty ? difficultyMap[difficulty] : undefined;
 
+    // Game state
     const [levels, setLevels] = useState<LevelResponse[] | null>(null);
     const [currentLevelIndex, setCurrentLevelIndex] = useState(0);
     const [runId, setRunId] = useState<number | null>(null);
@@ -41,6 +48,7 @@ export function Game() {
     const [completionAchievement, setCompletionAchievement] = useState<string | null>(null);
     const [prevDifficulty, setPrevDifficulty] = useState(difficulty);
 
+    // Sound effects for game interactions
     const buttonClickSound = useRef(new Audio('/src/assets/sounds/buttonClick.mp3'));
     const difficultySuccessSound = useRef(new Audio('/src/assets/sounds/difficultySuccess.mp3'));
     const gameOverSound = useRef(new Audio('/src/assets/sounds/gameOver.wav'));
@@ -48,6 +56,7 @@ export function Game() {
     const {t} = useTranslation();
     const {soundEnabled} = useSound();
 
+    // Shows the achievement popup briefly, then hides it after 3 seconds.
     const handleAchievement = useCallback((key: string | null) => {
         if (key) {
             setUnlockedAchievement(key);
@@ -55,6 +64,8 @@ export function Game() {
         }
     }, []);
 
+
+    // Advances to the next level or triggers the difficulty completion screen, if all levels have been completed
     const handleNextLevel = useCallback(async (achievementKey: string | null = null) => {
         const nextIndex = currentLevelIndex + 1;
 
@@ -65,6 +76,7 @@ export function Game() {
             setTimeLeft(null);
             setResult(null);
 
+            // Wait for achievement popup to finish before showing completion screen
             if (achievementKey) {
                 await new Promise(resolve => setTimeout(resolve, 3000));
             }
@@ -73,6 +85,7 @@ export function Game() {
             return;
         }
 
+        // Move to next level
         setCurrentLevelIndex(nextIndex);
         setRunId(null);
         setTimeLeft(null);
@@ -85,6 +98,7 @@ export function Game() {
     }, [currentLevelIndex, levels, soundEnabled, unlockedAchievement, config.timer]);
 
 
+    // Get levels for the current difficulty on difficulty change
     useEffect(() => {
         if (!difficultyId) return;
         api.get<LevelResponse[]>(`/api/difficulties/${difficultyId}/levels`)
@@ -96,6 +110,7 @@ export function Game() {
     }, [difficultyId]);
 
 
+    // Countdown timer. Calls finish endpoint when time runs out. Sound for game over screen
     useEffect(() => {
         if (timeLeft === null) return;
 
@@ -125,6 +140,7 @@ export function Game() {
     }, [timeLeft, runId, result, soundEnabled, handleNextLevel]);
 
 
+    // Reset game state when difficulty changes
     if (prevDifficulty !== difficulty) {
         setPrevDifficulty(difficulty);
         setGameStarted(false);
@@ -135,7 +151,7 @@ export function Game() {
         setDifficultyComplete(false);
     }
 
-
+    // Fallback if no difficulty is selected
     if (!difficulty) {
         return (
             <main className="game-fallback">
@@ -170,8 +186,10 @@ export function Game() {
 
 
     const currentLevel = levels[currentLevelIndex];
+    // Use configured image position if defined, otherwise default to corner/small
     const imageConfig = imagePositionMap[currentLevel.levelId] ?? {position: "corner", size: "small"};
 
+    // Starts a new run for the current level and initializes the timer
     const handleStart = async () => {
         setGameStarted(true);
         const response = await api.post('/api/runs', {levelId: currentLevel.levelId});
@@ -180,6 +198,7 @@ export function Game() {
         setResult(null);
     };
 
+    // Handles a button click for standard (non-HOLD) level types.
     const handlePress = async () => {
         if (!runId) return;
         if (soundEnabled) {
@@ -203,12 +222,14 @@ export function Game() {
         }
     };
 
+    // Registers the start of a button hold (used for HOLD-type levels)
     const handleMouseDown = async () => {
         if (!runId) return;
         if (soundEnabled) void buttonClickSound.current.play();
         await api.post(`/api/runs/${runId}/press`);
     };
 
+    // Registers the release of a button hold (used for HOLD-type levels)
     const handleMouseUp = async () => {
         if (!runId) return;
         const response = await api.post(`/api/runs/${runId}/release`);
@@ -226,6 +247,7 @@ export function Game() {
         }
     };
 
+    // Resets the game to the initial state for replaying
     const handleReset = () => {
         setCurrentLevelIndex(0);
         setRunId(null);
@@ -234,6 +256,7 @@ export function Game() {
         setGameStarted(false);
     };
 
+    // Level-Design for the 3 difficulties
     return (
         <main className="game-page">
             <div className="game-box">
@@ -246,6 +269,7 @@ export function Game() {
                     <div className="timer">{timeLeft ?? config.timer}</div>
                 </section>
 
+                {/* Corner image displayed for certain levels*/}
                 <div className={`level-visual-corner-${imageConfig.size}`}>
                     {gameStarted && currentLevel.imageUrl && imageConfig.position === "corner" && (
                         <img
@@ -270,6 +294,7 @@ export function Game() {
                         )}
                     </div>
 
+                    {/* Main game button, behavior changes based on level type*/}
                     {gameStarted && result === null && (
                         <button
                             className={`circle-button ${difficulty}`}
@@ -279,6 +304,7 @@ export function Game() {
                             disabled={currentLevel.type === "READ_ONLY"}
                         >
                             {currentLevel.instruction}
+                            {/* Center image displayed inside the button for certain levels*/}
                             {currentLevel.imageUrl && imageConfig.position === "center" && (
                                 <div className={`level-visual-center-${imageConfig.size}`}>
                                     <img

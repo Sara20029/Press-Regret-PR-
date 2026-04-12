@@ -2,11 +2,17 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import "./AchievementPopup.css";
 
+// Props for the AchievementPopup component
 type Props = {
     achievementKey: string;
     onClose: () => void;
 };
 
+/**
+ * Popup displayed briefly when a new achievement is unlocked
+ * Auto-Dismiss after 3 seconds or when clicked
+ * Re-triggers the timer if a new achievement key is passed
+ */
 export function AchievementPopup({ achievementKey, onClose }: Props) {
     const { t } = useTranslation();
 

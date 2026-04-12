@@ -4,8 +4,7 @@ import {api} from "../../api/http.ts";
 import { useTranslation } from "react-i18next";
 import * as React from "react";
 
-
-
+// Shape of a single achievement returned by the backend
 type Achievement = {
     id: number;
     key: string;
@@ -14,6 +13,10 @@ type Achievement = {
     unlocked: boolean;
 };
 
+/**
+ * Achievements page displaying all available achievements with their unlock status
+ * Shows a progress bar and a card for each achievement
+ */
 export function Achievements() {
     const [achievements, setAchievements] = useState<Achievement[]>([]);
     const [loading, setLoading] = useState(true);
@@ -32,6 +35,7 @@ export function Achievements() {
             });
     }, []);
 
+    // Calculates progress for the progress bar
     const unlockedCount = achievements.filter(
         (achievement) => achievement.unlocked
     ).length;
@@ -65,12 +69,15 @@ export function Achievements() {
             <section className="achievements-header">
                 <h1>{t('achievements.title')}</h1>
                 <p>{t('achievements.subtitle')}</p>
+
+                {/*Progress counter and bar*/}
                 <p>
                     {t('achievements.subtitle')}: {unlockedCount} / {achievements.length} ({progressPercent}
                     %)
                 </p>
 
                 <div className="progress-bar">
+                    {/*Width is set dynamically via CSS custom property*/}
                     <div
                         className="progress-fill"
                         style={{ '--progress': `${progressPercent}%` } as React.CSSProperties}
@@ -78,6 +85,7 @@ export function Achievements() {
                 </div>
             </section>
 
+            {/*Achievement cards. Unlocked cards show a trophy, locked one show a lock*/}
             <section className="achievements-list">
                 {achievements.map((achievement) => (
                     <article
