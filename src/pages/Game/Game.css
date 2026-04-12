@@ -1,3 +1,4 @@
+/* Level design */
 .game-page {
     display: flex;
     justify-content: center;
@@ -61,7 +62,7 @@
     justify-content: center;
     align-items: center;
 }
-
+/* Button design */
 .circle-button {
     width: min(420px, 50vw);
     height: min(420px, 50vw);
@@ -132,6 +133,7 @@
     object-fit: contain;
 }
 
+/* Start button design */
 .start-button button {
     padding: 1.2rem 5rem;
     font-size: 1.5rem;
@@ -154,6 +156,7 @@
     transform: scale(0.97);
 }
 
+/* Reset button design */
 .reset-button button {
     padding: 1.2rem 5rem;
     font-size: 1.5rem;
@@ -175,6 +178,8 @@
 .reset-button button:active {
     transform: scale(0.97);
 }
+
+/* Game over design */
 .game-over-screen {
     position: absolute;
     top: 0;

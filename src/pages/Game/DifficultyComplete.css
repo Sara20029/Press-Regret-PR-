@@ -1,3 +1,4 @@
+/* Complete screen design */
 .complete-screen {
     background-color: var(--card-color);
     width: min(900px, 95vw);
@@ -63,12 +64,14 @@
     transform: scale(0.97);
 }
 
+/* Next level button design */
 .complete-btn-primary {
     background: var(--color-accent);
     color: var(--card-color);
     box-shadow: none;
 }
 
+/* Try again button design */
 .complete-btn-secondary {
     background: var(--color-accent);
     color: var(--card-color);

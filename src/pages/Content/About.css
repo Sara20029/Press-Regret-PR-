@@ -1,3 +1,4 @@
+/* About-page design */
 .about-page {
     min-height: 85vh;
     display: flex;
@@ -51,6 +52,7 @@
     max-width: 580px;
 }
 
+/* About team design */
 .about-team-section {
     display: flex;
     flex-direction: column;
